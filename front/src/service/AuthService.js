@@ -20,12 +20,12 @@ function autenticar(usuario) {
 
 function cadastrar(usuario) {
     console.log(usuario)
-    return axios.post(`${url}/registrar`, {email: usuario.email, password: usuario.senha})
+    return axios.post(`${url}/users`, {email: usuario.email, password: usuario.senha})
     .then((response) => {
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
-        //console.log(error)
+        console.log(error)
         if (error.response) {
             return {sucesso: false, mensagem: error.response.data}
         } else {

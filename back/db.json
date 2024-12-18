@@ -1,3 +1,29 @@
 {
-  "users": []
+  "users": [
+    {
+      "email": "a@a.c",
+      "password": "$2a$10$/.cLs2GISwmwqsR/n3rJCOzIyrFquyzz8Lthr38OUMQWpF7r5bL8i",
+      "id": 1
+    },
+    {
+      "email": "marcos@c.c",
+      "password": "$2a$10$/iZFkeBvIIfft.HmoRG1W.5LdwbtncIUQ/DHbTpIY2XBqCbOZj7r6",
+      "id": 2
+    },
+    {
+      "email": "b@b.b",
+      "password": "$2a$10$Sh8lNiTu/6xLjmEurntcTOE8gjiJIKT2XoIpEbi9RBNPq6VwN/fCO",
+      "id": 3
+    },
+    {
+      "email": "c@c.c",
+      "password": "$2a$10$CRip9lrrcdDUnXSS4QOOquWUVr1UoGhJXdWp5OhWKNhIor6B4Oyxi",
+      "id": 4
+    },
+    {
+      "email": "a@a.a",
+      "password": "$2a$10$sBQBTbM9bXd1.GpGmFH5veIr0izr7t153mDfHWI4aV7EcAvh/DqLq",
+      "id": 5
+    }
+  ]
 }

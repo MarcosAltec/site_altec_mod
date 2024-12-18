@@ -13,6 +13,7 @@ function App(){
   return (
     <BrowserRouter>
       <Routes>
+        {}
         <Route path="/" element={<Cabecalho />}/>
         <Route path="/home" element={<Home />}/>
         <Route path='/registrar' element={<Registrar />}/>
