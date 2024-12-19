@@ -14,7 +14,7 @@ function Login() {
             setErro(resultado);
         } else {
             setErro("")
-            navigate("/home")
+            navigate("/perfil")
         }
     }
 

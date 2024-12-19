@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Cabecalho from "./components/Cabecalho";
 import Login from './pages/Login';
 import Erro404 from './pages/Erro404';
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContexts';
 import Home from './pages/Home';
 import Registrar from './pages/Registrar';
+import Perfil from './pages/Perfil';
 
 function App(){
   const { usuario } = useContext(AuthContext);
@@ -13,11 +13,20 @@ function App(){
   return (
     <BrowserRouter>
       <Routes>
-        {}
-        <Route path="/" element={<Cabecalho />}/>
+        {!usuario.logado ? (
+          <>
+          <Route path='/registrar' element={<Registrar />}/>
+          <Route path="/login" element={<Login />}/>
+          </>
+          
+        ) : (
+          <>
+          <Route path="/perfil" element={<Perfil />}/>
+          </>
+        )}
+        
         <Route path="/home" element={<Home />}/>
-        <Route path='/registrar' element={<Registrar />}/>
-        <Route path="/login" element={<Login />}/>
+
         <Route path='*' element={<Erro404 />} />
       </Routes>
     </BrowserRouter>

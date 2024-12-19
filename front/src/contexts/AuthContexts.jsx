@@ -7,7 +7,6 @@ function AuthProvider(props) {
     const [ usuario, setUsuario ] = useState({id: null, email: null, logado: false, token: null});
 
     const login = async (usuario) => {
-        //console.log(usuario)
         const resposta = await autenticar(usuario);
 
         if (resposta.sucesso) {
