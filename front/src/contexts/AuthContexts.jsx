@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 function AuthProvider(props) {
     const [ usuario, setUsuario ] = useState({id: null, email: null, logado: false, token: null});
+    const [ pedido, setPedido ] = useState({id: null, descricao: null, preco: null, link: null})
 
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
@@ -33,7 +34,22 @@ function AuthProvider(props) {
         }
     }
 
-    const contexto = {usuario, login, signup}
+    const consultaProdutos = async (id) => {
+        const resposta = await pesquidaPruduto(id);
+        if (resposta.sucesso) {
+            setPedido({
+                    id: resposta.dados.id, 
+                    descricao: resposta.dados.descricao, 
+                    preco: resposta.dados.preco, 
+                    link: resposta.dados.link,
+            })
+            return "";
+        } else{
+            return resposta.mensagem;
+        }
+    };
+
+    const contexto = {usuario, pedido, login, signup, consultaProdutos}
     return (
         <AuthContext.Provider value={contexto}>
             {props.children}

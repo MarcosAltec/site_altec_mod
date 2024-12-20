@@ -37,4 +37,7 @@ function alterar(){
     return
 };
 
+function pesquidaPruduto(id){}
+
+
 export {autenticar, cadastrar, alterar};

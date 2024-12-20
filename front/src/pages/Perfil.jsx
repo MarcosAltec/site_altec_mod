@@ -1,11 +1,13 @@
-import Cabecalho from "../components/Cabecalho";
+import { useState } from "react";
+
 
 function Perfil() {
+    const [erro, setErro] = useState("");
+    
+
     return (
         <>
-            <Cabecalho />
-            <h2>Perfil</h2>
-            <p>Página de perfil do usuário</p>            
+
         </>
     )
 }
