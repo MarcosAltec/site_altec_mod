@@ -21,7 +21,7 @@ function Registrar() {
             <h1>Registrar</h1>
 
             <Formulario onEnviar={onConfirmar} texto="Confirmar" />
-            <Link to="/login">Voltar</Link>
+            <Link to="/login">Login</Link>
         </>
     )
 }

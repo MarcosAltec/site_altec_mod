@@ -2,8 +2,34 @@
   "users": [
     {
       "email": "marcos@com.br",
-      "password": "$2a$10$RokTNa28YP67wbXQjG.Ey.6ouhOMCV9AQE8OJ0d7D9EFkcZg1fKsC",
+      "password": "$2a$10$V29OgvPVabhNLRD85E9dkO4hELqyh00aeezV6.kqajpPSYujNcRru",
       "id": 1
+    },
+    {
+      "email": "passos@com.br",
+      "password": "$2a$10$JR0QZX5flMeViEAViaB31OnY8xU3VT.hk43yXBbeKCisoloROe/ty",
+      "id": 2
+    }
+  ],
+  "produtos": [],
+  "pedidos": [
+    {
+      "usuario_id": 1,
+      "descricao": "Invictus 1200",
+      "link": "downloadlinkaqui",
+      "id": 1
+    },
+    {
+      "usuario_id": 1,
+      "descricao": "Invictus HD",
+      "link": "downloadlinkaqui",
+      "id": 2
+    },
+    {
+      "usuario_id": 2,
+      "descricao": "Invictus DD",
+      "link": "downloadlinkaqui",
+      "id": 3
     }
   ]
 }

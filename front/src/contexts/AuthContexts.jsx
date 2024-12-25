@@ -1,14 +1,15 @@
 import { createContext, useState } from "react";
-import { autenticar, cadastrar, alterar } from "../service/AuthService";
+import { autenticar, cadastrar, pesquidaPruduto } from "../service/AuthService";
 
 const AuthContext = createContext();
 
 function AuthProvider(props) {
     const [ usuario, setUsuario ] = useState({id: null, email: null, logado: false, token: null});
-    const [ pedido, setPedido ] = useState({id: null, descricao: null, preco: null, link: null})
+    const [ pedido, setPedido ] = useState({id: null, descricao: null, link: null})
 
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
+        //console.log("LOGIN CONTEXTS", resposta.dados.user)
 
         if (resposta.sucesso) {
             setUsuario({
@@ -27,25 +28,26 @@ function AuthProvider(props) {
         const resposta = await cadastrar(usuario);
         console.log(usuario)
         if (resposta.sucesso) {
-            setUsuario({id: resposta.dados.user.id, email: resposta.dados.user.email, logado: true, token: resposta.dados.accessToken});
+            setUsuario({
+                id: resposta.dados.user.id, 
+                email: resposta.dados.user.email,
+                logado: true, 
+                token: resposta.dados.accessToken});
             return null
         } else {
             return resposta.mensagem
         }
     }
 
-    const consultaProdutos = async (id) => {
-        const resposta = await pesquidaPruduto(id);
+    const consultaProdutos = async () => {
+        const usuarioId = (usuario.id)
+        //console.log("RESGATA ID", usuarioId)
+        const resposta = await pesquidaPruduto(usuarioId);
+
         if (resposta.sucesso) {
-            setPedido({
-                    id: resposta.dados.id, 
-                    descricao: resposta.dados.descricao, 
-                    preco: resposta.dados.preco, 
-                    link: resposta.dados.link,
-            })
-            return "";
-        } else{
-            return resposta.mensagem;
+            console.log("CONTEUDO RESPOSTA PRODUTO", resposta)
+        } else {
+            console.log("CONTEUDO RESPOSTA PRODUTO ELSE", resposta)
         }
     };
 
