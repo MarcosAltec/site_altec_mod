@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { autenticar, cadastrar, pesquidaPruduto } from "../service/AuthService";
+import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos } from "../service/AuthService";
 
 const AuthContext = createContext();
 
@@ -39,19 +39,30 @@ function AuthProvider(props) {
         }
     }
 
-    const consultaProdutos = async () => {
-        const usuarioId = (usuario.id)
-        //console.log("RESGATA ID", usuarioId)
-        const resposta = await pesquidaPruduto(usuarioId);
+    const meusPedidos = async () => {
+        const usuarioId = usuario.id
+        //console.log("ID USUARIO", usuarioId)
+        const resposta = await pesquisarPedidos();
+        const meusPedidos = []
 
         if (resposta.sucesso) {
-            console.log("CONTEUDO RESPOSTA PRODUTO", resposta)
+            for (let index = 0; index < resposta.dados.length; index++) {
+                if(resposta.dados[index].usuario_id == usuarioId){
+                    meusPedidos.push(resposta.dados[index])
+                }
+            }
         } else {
-            console.log("CONTEUDO RESPOSTA PRODUTO ELSE", resposta)
+            return resposta.mensagem
         }
+        return meusPedidos;
     };
 
-    const contexto = {usuario, pedido, login, signup, consultaProdutos}
+    const consultarProdutos = async () => {
+        const resposta = await pesquisarProdutos();
+        return resposta.dados;
+    }
+
+    const contexto = {usuario, pedido, login, signup, meusPedidos, consultarProdutos}
     return (
         <AuthContext.Provider value={contexto}>
             {props.children}

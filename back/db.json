@@ -11,25 +11,52 @@
       "id": 2
     }
   ],
-  "produtos": [],
+  
+  "produtos": [
+    {
+      "nome_mod": "Campione Invictus 1200 Mercedes",
+      "preco": 20.90,
+      "link_download": "https://altecmod.com/invictus-1200-mb.html",
+      "id": 1
+    },
+    {
+      "nome_mod": "Campione Invictus HD Scania",
+      "preco": 22.90,
+      "link_download": "https://altecmod.com/invictus-hd-sc.html",
+      "id": 2
+    },
+    {
+      "nome_mod": "Campione Invictus DD Scania",
+      "preco": 23.90,
+      "link_download": "https://altecmod.com/invictus-dd-sc.html",
+      "id": 3
+    }
+  ],
+
   "pedidos": [
     {
       "usuario_id": 1,
       "descricao": "Invictus 1200",
-      "link": "downloadlinkaqui",
+      "link": "https://altecmod.com/invictus-1200-mb.html",
       "id": 1
     },
     {
       "usuario_id": 1,
       "descricao": "Invictus HD",
-      "link": "downloadlinkaqui",
+      "link": "https://altecmod.com/invictus-hd-sc.html",
       "id": 2
     },
     {
       "usuario_id": 2,
       "descricao": "Invictus DD",
-      "link": "downloadlinkaqui",
+      "link": "download_link_invictusDD",
       "id": 3
+    },
+    {
+      "usuario_id": 2,
+      "descricao": "New G7",
+      "link": "download_link_newG7",
+      "id": 4
     }
   ]
 }

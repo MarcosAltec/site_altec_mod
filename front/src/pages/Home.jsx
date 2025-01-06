@@ -1,11 +1,23 @@
-import Cabecalho from "../components/Cabecalho";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContexts";
+import Produto from "../components/Produto";
 
 function Home() {
+    const { consultarProdutos } = useContext(AuthContext);
+    const [produtos, setProduto] = useState([])
 
-    return (
+    useEffect(() => {
+        const fetchData = async () => {
+            const produto = await consultarProdutos();
+            setProduto(produto)
+        };
+        fetchData();
+    }, [consultarProdutos]);
+
+    return(
         <>
-            <Cabecalho />
-            <h2>Página Home</h2>
+            <h1>Página Home</h1>
+            <Produto itens={produtos}/>
         </>
     )
 }

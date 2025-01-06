@@ -10,8 +10,8 @@ function Login() {
 
     const onEntrar = async (data) => {
         const resultado = await login(data);
-        if (resultado) {
-            setErro(resultado);
+        if (erro) {
+            setErro(erro);
         } else {
             setErro("")
             navigate("/perfil")

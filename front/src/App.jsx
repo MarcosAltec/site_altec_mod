@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './pages/Login';
-import Erro404 from './pages/Erro404';
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContexts';
+import Login from './pages/Login';
+import Erro404 from './pages/Erro404';
 import Home from './pages/Home';
 import Registrar from './pages/Registrar';
 import Perfil from './pages/Perfil';
+import ProdutoSaibaMais from './pages/ProdutoSaibaMais';
 
 function App(){
   const { usuario } = useContext(AuthContext);
@@ -24,9 +25,8 @@ function App(){
           <Route path="/perfil" element={<Perfil />}/>
           </>
         )}
-        
-        <Route path="/home" element={<Home />}/>
-
+        <Route path="/" element={<Home />}/>
+        <Route path="/:id" element={<ProdutoSaibaMais />}/>
         <Route path='*' element={<Erro404 />} />
       </Routes>
     </BrowserRouter>

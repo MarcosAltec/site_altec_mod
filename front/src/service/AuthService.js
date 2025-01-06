@@ -31,8 +31,8 @@ function cadastrar(usuario) {
     })
 };
 
-function pesquidaPruduto(usuarioId){
-    return axios.get(`${url}/pedidos/${usuarioId}`)
+function pesquisarPedidos(){
+    return axios.get(`${url}/pedidos`)
     .then((response) => {
         console.log("RESULTADO RESPONSE", response)
         return {sucesso: true, dados: response.data}
@@ -47,5 +47,19 @@ function pesquidaPruduto(usuarioId){
     })
 }
 
+function pesquisarProdutos(){
+    return axios.get(`${url}/produtos`)
+    .then((response) => {
+        return {sucesso: true, dados: response.data}
+    })
+    .catch((error) => {
+        if (error.response) {
+            return {sucesso: false, mensagem: error.response.data}
+        } else {
+            return {sucesso: false, mensagem: "Ocorreu um erro!"}
+        }
+    })
+}
 
-export {autenticar, cadastrar, pesquidaPruduto};
+
+export {autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos};

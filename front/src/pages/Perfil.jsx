@@ -1,17 +1,27 @@
-import { useContext, useState } from "react";
-import Botao from "../components/Botao";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from '../contexts/AuthContexts'
+import MeusProdutos from "../components/MeusProdutos";
+import { Link } from "react-router-dom";
 
 
 function Perfil() {
     const [erro, setErro] = useState("deu erro");
-    const { consultaProdutos } = useContext(AuthContext)
+    const { meusPedidos } = useContext(AuthContext)
+    const [pedidos, setPedidos] = useState([])
     
-
+    useEffect(() => {
+        const fetchData = async () => {
+            const pedidos = await meusPedidos();
+            setPedidos(pedidos)
+            console.log("PESQUISAR PEDIDOS", pedidos);
+        };
+        fetchData();   
+    }, [meusPedidos]);
     return (
         <>
             <h2>Perfil do usuário</h2>
-            <Botao onClink={consultaProdutos()} texto="Buscar produtos"/>
+            <MeusProdutos itens={pedidos}/>
+            <Link to="/">Home</Link>
         </>
     )
 }
