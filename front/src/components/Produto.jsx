@@ -14,8 +14,7 @@ function Produto(props){
                 <img src="asdf" alt="imagem" />
                 <h3>R$ {item.preco}</h3>
                 <p>à vista, cartão ou pix</p>
-                {}
-                <Link to={`/${formataLink(item.nome_mod)}`}>Conheça o MOD</Link>
+                <Link to={`/produto/${formataLink(item.nome_mod)}`}>Conheça o MOD</Link>
             </div>
         ))}
         

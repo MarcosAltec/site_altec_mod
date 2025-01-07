@@ -1,7 +1,12 @@
-function ProdutoSaibaMais() {
+
+function ProdutoSaibaMais(props) {
+
+    
+
     return (
         <>
-        <h2>Página de Produtos</h2>
+        <h2>Página prodiso</h2>
+
         </>
     )
 }

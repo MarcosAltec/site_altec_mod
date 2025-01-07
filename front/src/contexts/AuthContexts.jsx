@@ -9,7 +9,6 @@ function AuthProvider(props) {
 
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
-        //console.log("LOGIN CONTEXTS", resposta.dados.user)
 
         if (resposta.sucesso) {
             setUsuario({
