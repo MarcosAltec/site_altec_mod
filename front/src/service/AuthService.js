@@ -20,9 +20,11 @@ function autenticar(usuario) {
 function cadastrar(usuario) {
     return axios.post(`${url}/users`, {email: usuario.email, password: usuario.senha})
     .then((response) => {
+        console.log("RESPONSE", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
+        console.log("ERROR", error)
         if (error.response) {
             return {sucesso: false, mensagem: error.response.data}
         } else {
@@ -34,7 +36,7 @@ function cadastrar(usuario) {
 function pesquisarPedidos(){
     return axios.get(`${url}/pedidos`)
     .then((response) => {
-        console.log("RESULTADO RESPONSE", response)
+        //console.log("RESULTADO RESPONSE", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
@@ -61,5 +63,4 @@ function pesquisarProdutos(){
     })
 }
 
-
-export {autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos};
+export { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos };

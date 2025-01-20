@@ -2,9 +2,9 @@ function NavMenu() {
     return (
         <nav>
             <ul>
-                <li>Loja</li>
                 <li>Sobre</li>
                 <li>Suporte</li>
+                <li>Perguntas frequentes</li>
             </ul>
         </nav>
     )

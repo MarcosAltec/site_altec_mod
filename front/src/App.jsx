@@ -26,7 +26,7 @@ function App(){
           </>
         )}
         <Route path="/" element={<Home />}/>
-        <Route path="/produto/:id" element={<ProdutoSaibaMais />}/>
+        <Route path="/produto/:codigo/:name" element={<ProdutoSaibaMais />}/>
         <Route path='*' element={<Erro404 />} />
       </Routes>
     </BrowserRouter>

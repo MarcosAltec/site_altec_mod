@@ -11,31 +11,107 @@
       "id": 2
     }
   ],
-  
   "produtos": [
     {
       "nome_mod": "Campione Invictus 1200 Mercedes",
       "codigo": 100,
       "preco": 20.90,
-      "link_download": "https://altecmod.com/invictus-1200-mb.html",
+      "link_foto": "https://altecmod.com/img/invictus1200-mb/inicio.jpg",
+      "demais_fotos": [
+        "https://altecmod.com/img/invictus1200-mb/img1-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img2-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img3-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img4-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img5-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img6-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img7-icon.jpg",
+        "https://altecmod.com/img/invictus1200-mb/img8-icon.jpg"
+      ],
+      "sobre_o_mod": "Mod compatível apenas para o Euro Truck Simulator 2 - versões 1.45 em diante.",
+      "carroceria": "Comil Campione Invictus 1200",
+      "chassis": ["Mercedes-Benz O 500 RSD 6x2"],
+      "motor": [
+        "OM 457 LA (Proconve P-7) 354cv",
+        "OM 457 LA (Proconve P-7) 410cv"
+      ],
+      "transmissao": [
+        "Auto. MB ZF Ecolife 6 AP (Original)",
+        "Auto. MB GO 240-8 Retarder (Original)",
+        "Auto. MB GO 240-8 Retarder (Modificada)",
+        "Auto. MB ZF Ecolife 6 AP Retarder (Original)"
+      ],
+      "interior": "Cabine do motorista padrão",
       "id": 1
     },
     {
       "nome_mod": "Campione Invictus HD Scania",
       "codigo": 101,
       "preco": 22.90,
-      "link_download": "https://altecmod.com/invictus-hd-sc.html",
+      "link_foto": "https://altecmod.com/img/invictushd-sc/inicio.jpg",
+      "demais_fotos": [
+        "https://altecmod.com/img/invictushd-sc/img1-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img2-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img3-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img4-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img5-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img6-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img7-icon.jpg",
+        "https://altecmod.com/img/invictushd-sc/img8-icon.jpg"
+      ],
+      "sobre_o_mod": "Mod compatível apenas para o Euro Truck Simulator 2 - versão 1.45 em diante.",
+      "carroceria": "Comil Campione Invictus HD",
+      "chassis": [
+        "K 400 8x2 - Low Driver 14 Metros",
+        "K 400 6x2 - Low Driver 14 Metros"
+      ],
+      "motor": [
+        "DC13 113 400 Euro 5 (original) - 400 cv",
+        "DC13 112 440 Euro 5 - 440 cv"
+      ],
+      "transmissao": [
+        "Opticruise GR 875R (com retarder Scania) - 8 velocidades",
+        "Opticruise GRS 895 R - 12 velocidades",
+        "Opticruise GRS 895 R (com retarder Scania) - 12 velocidades",
+        "Opticruise GR 875R - 8 velocidades"
+      ],
+      "interior": "Cabine padrão comil",
       "id": 2
     },
     {
       "nome_mod": "Campione Invictus DD Scania",
       "codigo": 102,
       "preco": 23.90,
-      "link_download": "https://altecmod.com/invictus-dd-sc.html",
+      "link_foto": "https://altecmod.com/img/invictusdd_sc/inicio.jpg",
+      "demais_fotos": [
+        "https://altecmod.com/img/invictusdd_sc/img1-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img2-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img3-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img4-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img5-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img6-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img7-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img8-icon.jpg"
+      ],
+      "sobre_o_mod": "Mod compatível apenas para o Euro Truck Simulator 2 - versão 1.45 em diante.",
+      "carroceria": "Comil Campione Invictus DD",
+      "chassis": [
+        "K 400 8x2 - Low Driver 14 Metros",
+        "K 400 6x2 - Low Driver 14 Metros"
+      ],
+      "motor": [
+        "DC13 112 440 Euro 5",
+        "DC13 113 400 Euro 5 (original)"
+      ],
+      "transmissao": [
+        "Opticruise GR 875 R",
+        "Opticruise GR 875 R (com retarder Scania)",
+        "Opticruise GRS 895 R",
+        "Opticruise GRS 895 R (com retarder Scania)"
+      ],
+      "interior": "Novo conceito de cabine apresentada pela comil em 2018",
       "id": 3
     }
   ],
-
   "pedidos": [
     {
       "usuario_id": 1,
@@ -61,5 +137,7 @@
       "link": "download_link_newG7",
       "id": 4
     }
-  ]
+  ],
+  "loja": []
+
 }

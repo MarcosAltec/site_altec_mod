@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContexts";
 import Produto from "../components/Produto";
+import Cabecalho from "../components/Cabecalho";
+import Rodape from "../components/Rodape";
+import Conteudo from "../components/Conteudo";
 
 function Home() {
     const { consultarProdutos } = useContext(AuthContext);
@@ -16,8 +19,12 @@ function Home() {
 
     return(
         <>
-            <h1>Página Home</h1>
-            <Produto itens={produtos}/>
+            <Cabecalho />
+            <Conteudo>
+                <h1>Página Inicial</h1>
+                <Produto itens={produtos}/>
+            </Conteudo>
+            <Rodape />
         </>
     )
 }

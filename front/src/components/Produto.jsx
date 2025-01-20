@@ -9,12 +9,11 @@ function Produto(props){
         <>
         {props.itens.map((item, index) => (
             <div key={index}>
-            {console.log("ITEM", item)}
                 <h2>{item.nome_mod}</h2>
-                <img src="asdf" alt="imagem" />
+                <img src={item.link_foto} alt="imagem" />
                 <h3>R$ {item.preco}</h3>
                 <p>à vista, cartão ou pix</p>
-                <Link to={`/produto/${formataLink(item.nome_mod)}`}>Conheça o MOD</Link>
+                <Link to={`/produto/${item.codigo}/${formataLink(item.nome_mod)}`}>Conheça o MOD</Link>
             </div>
         ))}
         

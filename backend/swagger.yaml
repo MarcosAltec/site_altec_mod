@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info: 
+  title: API Clientes
+  version: 0.0.1
+tags: 
+  - name: usuarios
+paths: 
+  /usuarios:
+    post:
+      tags:
+        - usuarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+      response:
+        201:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        422:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+components:
+  securitySchemes:
+    JWTAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    ArrayOfUsuarios:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Usuario'
+    Usuario:
+      type: object
+      properties:
+        email:
+          type: string
+        senha:
+          type: string
+        salto: 
+          type: string
+    Mensagem:
+      type: object
+      properties:
+        msg:
+          type: string
+  

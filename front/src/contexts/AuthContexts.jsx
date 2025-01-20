@@ -59,9 +59,22 @@ function AuthProvider(props) {
     const consultarProdutos = async () => {
         const resposta = await pesquisarProdutos();
         return resposta.dados;
-    }
+    };
 
-    const contexto = {usuario, pedido, login, signup, meusPedidos, consultarProdutos}
+    const searchProduct = async (id) => {
+        const resposta = await pesquisarProdutos();
+        const resultado = []
+        for (let index = 0; index < resposta.dados.length; index++) {
+            if(resposta.dados[index].codigo == id.codigo){
+                //console.log("RESPOSTA AUTH", resposta.dados[index])
+                resultado.push(resposta.dados[index]);
+                console.log(typeof(resultado))
+            };  
+        };
+        return resultado;
+    };
+
+    const contexto = {usuario, pedido, login, signup, meusPedidos, consultarProdutos, searchProduct}
     return (
         <AuthContext.Provider value={contexto}>
             {props.children}
