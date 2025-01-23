@@ -5,7 +5,6 @@ const url = import.meta.env.VITE_API_URL;
 function autenticar(usuario) {
     return axios.post(`${url}/login`, {email: usuario.email, password: usuario.senha})
     .then((response) => {
-        console.log("AUTENTICAR", response)
         return { sucesso: true, dados: response.data }
     })
     .catch((error) => {
@@ -18,13 +17,12 @@ function autenticar(usuario) {
 };
 
 function cadastrar(usuario) {
-    return axios.post(`${url}/users`, {email: usuario.email, password: usuario.senha})
+    return axios.post(`${url}/usuarios`, {email: usuario.email, senha: usuario.senha})
     .then((response) => {
-        console.log("RESPONSE", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
-        console.log("ERROR", error)
+        console.log("ERROR", error.response.status, error.response.request.response)
         if (error.response) {
             return {sucesso: false, mensagem: error.response.data}
         } else {
@@ -36,7 +34,6 @@ function cadastrar(usuario) {
 function pesquisarPedidos(){
     return axios.get(`${url}/pedidos`)
     .then((response) => {
-        //console.log("RESULTADO RESPONSE", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {

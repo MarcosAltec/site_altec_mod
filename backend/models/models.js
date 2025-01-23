@@ -1,9 +1,34 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    email: { type: String, required: true }, 
-    senha: { type: String, required: true},
+    email: { 
+        type: String,
+        required: true,
+        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    }, 
+    senha: {
+        type: String,
+        required: true,
+        minLength: 6
+    },
     salto: String
 });
 
-module.exports = mongoose.model('Usuarios', userSchema);
+const productSchema = new mongoose.Schema({
+    nome_mod: { type: String, required: true},
+    codigo: { type: Number, required: true},
+    preco: { type: Number, required: true},
+    link_foto: { type: String, required: true},
+    demais_fotos: { type: [String], required: true},
+    sobre_o_mod: { type: String, required: true},
+    carroceria: { type: String, required: true},
+    chassis: { type: [String], required: true},
+    motor: { type: [String], required: true},
+    transmissao: { type: [String], required: true},
+    interior: { type: String, required: true},
+})
+
+const Usuario = mongoose.model('Usuario', userSchema);
+const Produto = mongoose.model('Produto', productSchema);
+
+module.exports = { Usuario, Produto }

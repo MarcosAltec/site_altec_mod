@@ -3,11 +3,10 @@ const mongoose = require('mongoose');
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//const cors = require('cors');
+const cors = require('cors');
 
 const routerApidocs = require('./routes/apidocs');
-
-var usersRouter = require('./routes/routes');
+const usersRouter = require('./routes/routes');
 
 var app = express();
 
@@ -18,7 +17,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//app.use(cors());
+// const corsOptions = {
+//     origin: 'http://localhost:5173/',
+//     methods: 'GET,PUT,POST,DELETE',
+//     credentials: true,
+//     optionsSuccessStatus: 204
+// }
+
+app.use(cors());
 
 app.use('/api-docs', routerApidocs);
 
