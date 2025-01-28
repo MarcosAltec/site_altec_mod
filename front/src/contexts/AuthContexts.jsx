@@ -4,18 +4,17 @@ import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos } from "../s
 const AuthContext = createContext();
 
 function AuthProvider(props) {
-    const [ usuario, setUsuario ] = useState({id: null, email: null, logado: false, token: null});
+    const [ usuario, setUsuario ] = useState({ token: null, logado: false });
     const [ pedido, setPedido ] = useState({id: null, descricao: null, link: null})
 
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
+        console.log("LOGIN", resposta)
 
         if (resposta.sucesso) {
             setUsuario({
-                id: resposta.dados.user.id,
-                email: resposta.dados.user.email,
-                logado: true,
-                token: resposta.dados.accessToken,
+                token: resposta.dados.token,
+                logado: true
             });
             return "";
         } else {

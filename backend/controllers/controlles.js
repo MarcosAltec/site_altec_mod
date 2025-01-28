@@ -42,6 +42,20 @@ async function criar(req, res) {
     }
 }
 
+async function entrar(req, res) {
+    const usuarioEncontrado = await Usuario.findOne({ email: req.body.email });
+    if (usuarioEncontrado) {
+        const senhaCifrada = cifrarSenha(req.body.password, usuarioEncontrado.salto);
+        if (usuarioEncontrado.senha === senhaCifrada) {
+            res.json({token: jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '2m'})})
+        } else {
+            res.status(401).json({ msg: 'acesso negado' });
+        }
+    } else {
+        res.status(400).json({ msg: 'credenciais invalidas' });
+    }
+}
+
 async function deletar(req, res) {
     const id = new mongoose.Types.ObjectId(req.params.id);
     try {
@@ -70,4 +84,4 @@ async function consultarProdutos(req, res) {
     }
 }
 
-module.exports = { criar, deletar, cadastrarProdutos, consultarProdutos, validarDados };
+module.exports = { criar, deletar, cadastrarProdutos, consultarProdutos, validarDados, entrar };

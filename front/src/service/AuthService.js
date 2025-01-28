@@ -3,9 +3,11 @@ import axios from "axios";
 const url = import.meta.env.VITE_API_URL;
 
 function autenticar(usuario) {
+    //console.log('AUTENTICAR', usuario)
     return axios.post(`${url}/login`, {email: usuario.email, password: usuario.senha})
     .then((response) => {
-        return { sucesso: true, dados: response.data }
+        localStorage.setItem('token', response.data.token);
+        return { sucesso: true, dados: response.data };
     })
     .catch((error) => {
         if (error.response) {
