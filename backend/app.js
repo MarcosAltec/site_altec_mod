@@ -6,7 +6,8 @@ var logger = require('morgan');
 const cors = require('cors');
 
 const routerApidocs = require('./routes/apidocs');
-const usersRouter = require('./routes/routes');
+const usersRouter = require('./routes/usuarios');
+const productRouter = require('./routes/produtos')
 
 var app = express();
 
@@ -17,17 +18,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(cors());
+
+app.use('/api-docs', routerApidocs);
+app.use('/', usersRouter);
+app.use('/produtos', productRouter)
+
+module.exports = app;
+
+
 // const corsOptions = {
 //     origin: 'http://localhost:5173/',
 //     methods: 'GET,PUT,POST,DELETE',
 //     credentials: true,
 //     optionsSuccessStatus: 204
 // }
-
-app.use(cors());
-
-app.use('/api-docs', routerApidocs);
-
-app.use('/', usersRouter);
-
-module.exports = app;

@@ -1,7 +1,8 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const { Usuario, Produto } = require('../models/models');
 const mongoose = require('mongoose');
+const { Usuario } = require('../models/usuario');
+const { Pedido } = require('../models/pedido');
 
 function cifrarSenha(senha, salto) {
     const hash = crypto.createHmac('sha512', salto);
@@ -47,7 +48,10 @@ async function entrar(req, res) {
     if (usuarioEncontrado) {
         const senhaCifrada = cifrarSenha(req.body.password, usuarioEncontrado.salto);
         if (usuarioEncontrado.senha === senhaCifrada) {
-            res.json({token: jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '2m'})})
+            const token = jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '2m'})
+            const pedidos = await Pedido.find({ usuario_id: usuarioEncontrado.__id})
+
+            res.json({token, pedidos })
         } else {
             res.status(401).json({ msg: 'acesso negado' });
         }
@@ -66,22 +70,4 @@ async function deletar(req, res) {
     }
 }
 
-async function cadastrarProdutos(req, res) {
-    try {
-        const novoProduto = await Produto.create(req.body);
-        return res.status(201).json(novoProduto);
-    } catch (err) {
-        res.status(404).json({ msg: 'Dados do produto inválidos'})
-    }
-}
-
-async function consultarProdutos(req, res) {
-    const listaProdutos = await Produto.find({});
-    try {
-        res.status(201).json(listaProdutos);
-    } catch (err) {
-        res.status(404).json(err);
-    }
-}
-
-module.exports = { criar, deletar, cadastrarProdutos, consultarProdutos, validarDados, entrar };
+module.exports = { criar, deletar, validarDados, entrar };

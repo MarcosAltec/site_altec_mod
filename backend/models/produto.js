@@ -1,19 +1,5 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    email: { 
-        type: String,
-        required: true,
-        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    }, 
-    senha: {
-        type: String,
-        required: true,
-        minLength: 6
-    },
-    salto: String
-});
-
 const productSchema = new mongoose.Schema({
     nome_mod: { type: String, required: true},
     codigo: { type: Number, required: true},
@@ -26,9 +12,9 @@ const productSchema = new mongoose.Schema({
     motor: { type: [String], required: true},
     transmissao: { type: [String], required: true},
     interior: { type: String, required: true},
-})
+    link_download: { type: String, required: true}
+});
 
-const Usuario = mongoose.model('Usuario', userSchema);
 const Produto = mongoose.model('Produto', productSchema);
 
-module.exports = { Usuario, Produto }
+module.exports = { Produto }

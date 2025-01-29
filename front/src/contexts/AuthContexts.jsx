@@ -16,6 +16,7 @@ function AuthProvider(props) {
                 token: resposta.dados.token,
                 logado: true
             });
+            setPedido(resposta.dados.pedidos);
             return "";
         } else {
             return resposta.mensagen;
@@ -24,13 +25,11 @@ function AuthProvider(props) {
 
     const signup = async (usuario) => {
         const resposta = await cadastrar(usuario);
-        console.log(usuario)
+        console.log('SINGUP', usuario)
         if (resposta.sucesso) {
             setUsuario({
-                id: resposta.dados.user.id, 
-                email: resposta.dados.user.email,
-                logado: true, 
-                token: resposta.dados.accessToken});
+                token: resposta.dados.token,
+                logado: true});
             return null
         } else {
             return resposta.mensagem

@@ -14,7 +14,7 @@ function Registrar() {
             setErro(resultado);
         } else {
             setErro("");
-            navigate("/registrar");
+            navigate("/perfil");
         }
     }
     return(
