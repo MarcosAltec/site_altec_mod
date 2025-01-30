@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { Usuario } = require('../models/usuario');
-const { Pedido } = require('../models/pedido');
+const { buscarPedidos } = require('../controllers/pedidos');
 
 function cifrarSenha(senha, salto) {
     const hash = crypto.createHmac('sha512', salto);
@@ -45,11 +45,13 @@ async function criar(req, res) {
 
 async function entrar(req, res) {
     const usuarioEncontrado = await Usuario.findOne({ email: req.body.email });
+
     if (usuarioEncontrado) {
         const senhaCifrada = cifrarSenha(req.body.password, usuarioEncontrado.salto);
+
         if (usuarioEncontrado.senha === senhaCifrada) {
             const token = jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '2m'})
-            const pedidos = await Pedido.find({ usuario_id: usuarioEncontrado.__id})
+            const pedidos = await buscarPedidos( usuarioEncontrado._id );
 
             res.json({token, pedidos })
         } else {

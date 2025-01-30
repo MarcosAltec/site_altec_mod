@@ -1,13 +1,38 @@
 const { Pedido } = require('../models/pedido');
+const { Produto } = require('../models/produto');
+const { Usuario } = require('../models/usuario');
 
-async function meusPedidos(req, res) {
-    const usuarioId = req.usuario.id;
+async function buscarPedidos(usuarioId) {
+    
+    const pedidos = await Pedido.find( req.body.usuarioEncontrado._id);
+
+    if(pedidos){
+
+    }
     try {
-        const pedidos = await Pedido.find({ usuario_id: usuarioId }).populate('produto_id', );
-        res.status(200).json(pedidos);
+        res.status(404).json({ msg: 'Não existe pedidos para este usuário!'});
     } catch (err) {
         res.status(500).json({ msg: 'Erro ao buscar pedidos', erro: err });
     }
 }
 
-module.exports = { meusPedidos };
+async function criarPedido (req, res) {    
+    const buscarProduto = await Produto.findOne({ codigo: req.body.codigo_mod}).select('nome_mod preco')
+    const buscarUsuario = await Usuario.findOne({ email: req.body.email}).select('email')
+
+    if (!buscarProduto || !buscarUsuario) {
+        return res.status(404).json({ msg: 'Produto ou Usuário não encontrado!' });
+    }
+    try {
+        const novoPedido = await Pedido.create({ 
+            usuario_id: buscarUsuario._id,
+            produto_id: buscarProduto._id,
+            preco_comprado: buscarProduto.preco
+        });
+        res.status(201).json(novoPedido);
+    } catch (error) {
+        res.status(400).json({ msg: 'Não foi possível cadastrar o pedido' });
+    }
+}
+
+module.exports = { buscarPedidos, criarPedido };

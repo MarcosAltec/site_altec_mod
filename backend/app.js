@@ -7,7 +7,8 @@ const cors = require('cors');
 
 const routerApidocs = require('./routes/apidocs');
 const usersRouter = require('./routes/usuarios');
-const productRouter = require('./routes/produtos')
+const productRouter = require('./routes/produtos');
+const orderRouter = require('./routes/pedidos');
 
 var app = express();
 
@@ -22,7 +23,8 @@ app.use(cors());
 
 app.use('/api-docs', routerApidocs);
 app.use('/', usersRouter);
-app.use('/produtos', productRouter)
+app.use('/produtos', productRouter);
+app.use('/pedidos', orderRouter);
 
 module.exports = app;
 
