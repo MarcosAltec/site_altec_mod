@@ -20,7 +20,7 @@ function Perfil() {
     return (
         <>
             <h2>Perfil do usuário</h2>
-            <MeusProdutos itens={pedidos}/>
+            {/* <MeusProdutos itens={pedidos}/> */}
             <Link to="/">Home</Link>
         </>
     )

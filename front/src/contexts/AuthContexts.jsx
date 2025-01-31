@@ -4,16 +4,17 @@ import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos } from "../s
 const AuthContext = createContext();
 
 function AuthProvider(props) {
-    const [ usuario, setUsuario ] = useState({ token: null, logado: false });
+    const [ usuario, setUsuario ] = useState({ token: null, email: null, id: null, logado: false });
     const [ pedido, setPedido ] = useState({id: null, descricao: null, link: null})
 
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
-        console.log("LOGIN", resposta)
 
         if (resposta.sucesso) {
             setUsuario({
                 token: resposta.dados.token,
+                email: resposta.dados.email,
+                id: resposta.dados.id,
                 logado: true
             });
             setPedido(resposta.dados.pedidos);
@@ -37,9 +38,10 @@ function AuthProvider(props) {
     }
 
     const meusPedidos = async () => {
-        const usuarioId = usuario.id
-        //console.log("ID USUARIO", usuarioId)
-        const resposta = await pesquisarPedidos();
+        // console.log("USUARIO", usuario.id)
+        // const usuarioId = usuario.id
+        // console.log("ID USUARIO", usuarioId)
+        const resposta = await pesquisarPedidos(usuario);
         const meusPedidos = []
 
         if (resposta.sucesso) {

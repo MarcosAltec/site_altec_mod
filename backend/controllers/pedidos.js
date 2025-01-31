@@ -2,24 +2,31 @@ const { Pedido } = require('../models/pedido');
 const { Produto } = require('../models/produto');
 const { Usuario } = require('../models/usuario');
 
-async function buscarPedidos(usuarioId) {
-    
-    const pedidos = await Pedido.find( req.body.usuarioEncontrado._id);
-
-    if(pedidos){
-
-    }
+async function buscarPedidos(req, res) {
+    console.log("AAAAA", req.body.identificador)
     try {
-        res.status(404).json({ msg: 'Não existe pedidos para este usuário!'});
+        const pedidos = await Pedido.find({ usuario_id: req.body.identificador });
+        const lista = []
+
+        if (pedidos.length === 0) {
+            return res.status(404).json({ msg: 'Não foi encontrado pedidos para este usuário!'});
+        }
+
+        for(let i = 0; i < pedidos.length; i++) {
+            const buscarProduto = await Produto.findOne({ _id: pedidos[i].produto_id }).select('-_id nome_mod codigo preco sobre_o_mod link_download');
+            lista.push(buscarProduto);
+        }
+        return res.status(200).json(lista)
+        
     } catch (err) {
         res.status(500).json({ msg: 'Erro ao buscar pedidos', erro: err });
     }
-}
+};
 
 async function criarPedido (req, res) {    
     const buscarProduto = await Produto.findOne({ codigo: req.body.codigo_mod}).select('nome_mod preco')
     const buscarUsuario = await Usuario.findOne({ email: req.body.email}).select('email')
-
+    // console.log("ACHOU", buscarProduto, buscarUsuario)
     if (!buscarProduto || !buscarUsuario) {
         return res.status(404).json({ msg: 'Produto ou Usuário não encontrado!' });
     }

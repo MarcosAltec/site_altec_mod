@@ -51,9 +51,11 @@ async function entrar(req, res) {
 
         if (usuarioEncontrado.senha === senhaCifrada) {
             const token = jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '2m'})
-            const pedidos = await buscarPedidos( usuarioEncontrado._id );
-
-            res.json({token, pedidos })
+            res.status(200).json({
+                token, 
+                email: usuarioEncontrado.email,
+                id: usuarioEncontrado._id
+             });
         } else {
             res.status(401).json({ msg: 'acesso negado' });
         }
