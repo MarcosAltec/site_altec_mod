@@ -1,5 +1,5 @@
-import { createContext, useState } from "react";
-import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos } from "../service/AuthService";
+import { createContext, useEffect, useState } from "react";
+import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, verificaToken } from "../service/AuthService";
 
 const AuthContext = createContext();
 
@@ -18,7 +18,7 @@ function AuthProvider(props) {
                 logado: true
             });
             setPedido(resposta.dados.pedidos);
-            return "";
+            return resposta.dados;
         } else {
             return resposta.mensagen;
         }
@@ -26,7 +26,6 @@ function AuthProvider(props) {
 
     const signup = async (usuario) => {
         const resposta = await cadastrar(usuario);
-        console.log('SINGUP', usuario)
         if (resposta.sucesso) {
             setUsuario({
                 token: resposta.dados.token,
@@ -38,22 +37,13 @@ function AuthProvider(props) {
     }
 
     const meusPedidos = async () => {
-        // console.log("USUARIO", usuario.id)
-        // const usuarioId = usuario.id
-        // console.log("ID USUARIO", usuarioId)
         const resposta = await pesquisarPedidos(usuario);
-        const meusPedidos = []
 
         if (resposta.sucesso) {
-            for (let index = 0; index < resposta.dados.length; index++) {
-                if(resposta.dados[index].usuario_id == usuarioId){
-                    meusPedidos.push(resposta.dados[index])
-                }
-            }
+            return resposta;
         } else {
             return resposta.mensagem
         }
-        return meusPedidos;
     };
 
     const consultarProdutos = async () => {
@@ -66,13 +56,35 @@ function AuthProvider(props) {
         const resultado = []
         for (let index = 0; index < resposta.dados.length; index++) {
             if(resposta.dados[index].codigo == id.codigo){
-                //console.log("RESPOSTA AUTH", resposta.dados[index])
                 resultado.push(resposta.dados[index]);
                 console.log(typeof(resultado))
             };  
         };
         return resultado;
     };
+
+    
+    useEffect(() => {
+        if (usuario.logado === false) {
+            const token = localStorage.getItem('token');
+            const email = localStorage.getItem('email');
+
+            if (token) {
+                verificaToken(token, email)
+                .then((resposta) => {
+                    if (resposta.sucesso) {
+                        setUsuario({
+                            token, 
+                            email: resposta.dados.email,
+                            id: resposta.dados.id,
+                            logado: true
+                        });
+                    } else {
+                        console.log('Token inaválido ou expirado', resposta.mensagem);
+                    }
+                })
+            }
+        }})    
 
     const contexto = {usuario, pedido, login, signup, meusPedidos, consultarProdutos, searchProduct}
     return (

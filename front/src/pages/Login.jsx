@@ -10,6 +10,7 @@ function Login() {
 
     const onEntrar = async (data) => {
         const resultado = await login(data);
+        // console.log('LOGIN PAGINA', resultado.email)
         if (erro) {
             setErro(erro);
         } else {

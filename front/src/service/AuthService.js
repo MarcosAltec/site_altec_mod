@@ -5,8 +5,9 @@ const url = import.meta.env.VITE_API_URL;
 function autenticar(usuario) {
     return axios.post(`${url}/login`, {email: usuario.email, password: usuario.senha})
     .then((response) => {
-        console.log('RESPONSE', response.data.email)
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('email', response.data.email);
+
         return { sucesso: true, dados: response.data };
     })
     .catch((error) => {
@@ -24,7 +25,6 @@ function cadastrar(usuario) {
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
-        console.log("ERROR", error.response.status, error.response.request.response)
         if (error.response) {
             return {sucesso: false, mensagem: error.response.data}
         } else {
@@ -34,9 +34,8 @@ function cadastrar(usuario) {
 };
 
 function pesquisarPedidos(usuario){
-    return axios.get(`${url}/pedidos`, {identificador: usuario.id})
+    return axios.get(`${url}/pedidos`, {params: { identificador: usuario.id }})
     .then((response) => {
-        console.log("PEDIDOS SERVICE", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
@@ -63,4 +62,26 @@ function pesquisarProdutos(){
     })
 }
 
-export { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos };
+function verificaToken(token, email) {
+    return axios.get(`${url}/validar-token`, {
+        headers: {
+            'Authorization': token,
+            email
+        }
+    })
+    .then((response) => {
+        console.log("VERIFICA TOKEN RETURN", response.data)
+        return { sucesso: true, dados: response.data }
+    })
+    .catch((error) => {
+        if (error.response) {
+            // console.log("ERRO RESPONSE", error.response)
+            return { sucesso: false, mensagem: error.response.data };
+        } else {
+            // console.log("ERRO RESPONSE ELSE", error.response)
+            return { sucesso: false, mensagem: 'Ocorreu um erro!' };
+        }
+    })
+}
+
+export { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, verificaToken };

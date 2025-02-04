@@ -50,7 +50,7 @@ async function entrar(req, res) {
         const senhaCifrada = cifrarSenha(req.body.password, usuarioEncontrado.salto);
 
         if (usuarioEncontrado.senha === senhaCifrada) {
-            const token = jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '2m'})
+            const token = jwt.sign({ email: usuarioEncontrado.email}, process.env.SEGREDO, { expiresIn: '1m'})
             res.status(200).json({
                 token, 
                 email: usuarioEncontrado.email,
@@ -64,6 +64,18 @@ async function entrar(req, res) {
     }
 }
 
+async function acessarViaToken(req, res) {
+    const usuarioEncontrado = await Usuario.findOne({ email: req.headers.email });
+    console.log('ACESSO VIA TOKEN', req.headers.email, usuarioEncontrado)
+
+    if (usuarioEncontrado) {
+        res.status(201).json({
+            email: usuarioEncontrado.email,
+            id: usuarioEncontrado._id
+        })
+    }
+}
+
 async function deletar(req, res) {
     const id = new mongoose.Types.ObjectId(req.params.id);
     try {
@@ -74,4 +86,4 @@ async function deletar(req, res) {
     }
 }
 
-module.exports = { criar, deletar, validarDados, entrar };
+module.exports = { criar, deletar, validarDados, entrar, acessarViaToken };

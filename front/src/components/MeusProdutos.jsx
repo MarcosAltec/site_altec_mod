@@ -8,8 +8,10 @@ function MeusProdutos(props) {
         <ul>
             {props.itens.map((item, index) => (
                 <li key={index}>
-                    <Botao texto="Baixar MOD">{item.link}</Botao>
-                    <span> {item.descricao}</span>
+                    <a href={item.link_download} target="_blank" rel="noopener noreferrer">
+                        <Botao texto="Baixar MOD"></Botao>
+                    </a>
+                    <span> {item.nome_mod}</span>
                 </li>
             ))}
         </ul>

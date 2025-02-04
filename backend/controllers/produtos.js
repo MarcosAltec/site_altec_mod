@@ -12,7 +12,7 @@ async function cadastrarProdutos(req, res) {
 async function consultarProdutos(req, res) {
     const listaProdutos = await Produto.find({}).select('-link_download');
     try {
-        console.log('LISTA PRODUTOS', listaProdutos)
+        // console.log('LISTA PRODUTOS', listaProdutos)
         res.status(201).json(listaProdutos);
     } catch (err) {
         res.status(404).json(err);
