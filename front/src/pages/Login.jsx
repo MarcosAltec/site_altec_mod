@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Formulario from "../components/Formulario";
 import { AuthContext } from "../contexts/AuthContexts";
+import Conteudo from "../components/Conteudo";
 
 function Login() {
     const [erro, setErro] = useState("");
@@ -20,12 +21,12 @@ function Login() {
     }
 
     return (
-        <>
-        <h2>Página de Login</h2>
-        {erro && <p>{erro}</p>}
-        <Formulario onEnviar={onEntrar} texto="Entrar"/>
-        <Link to="/registrar">Registrar</Link>
-        </>
+        <Conteudo>
+            <h2>Página de Login</h2>
+            {erro && <p>{erro}</p>}
+            <Formulario onEnviar={onEntrar} texto="Entrar"/>
+            <Link to="/registrar">Registrar</Link>
+        </Conteudo>
     )
 }
 

@@ -19,7 +19,7 @@ function Registrar() {
     }
     return(
         <Conteudo>
-            <h1>Registrar</h1>
+            <h2>Registrar</h2>
 
             <Formulario onEnviar={onConfirmar} texto="Confirmar" />
             <Link to="/login">Login</Link>

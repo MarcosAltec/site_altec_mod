@@ -1,0 +1,45 @@
+{
+    "titulo": "Perguntas frequentes",
+    "pergutas": [
+        {
+            "questao": "Comprei o MOD, e agora?",
+            "resposta": "É só aguardar o prazo de ATÉ 3 dias úteis que enviaremos o MOD ao seu e-mail de compra. Trabalhamos com o PagSeguro e PayPal e sempre que eles nos confirma o pagamento, enviamos o MOD no mesmo e-mail que você forneceu no ato da compra."
+        },
+        {
+            "questao": "Quais arquivos devo utilizar na pasta MOD?",
+            "resposta": "Para o funcionamento do MOD, é obrigatório apenas o uso do arquivos BASE."
+        },
+        {
+            "questao": "É obrigatório o uso do arquivo SKIN EDIT?",
+            "resposta": "O SKIN EDIT não é obrigatório exceto se você for usar uma pintura personalizada."
+        },
+        {
+            "questao": "Como usar o MOD no Multiplayer com outros jogadores?",
+            "resposta": "É necessário que ambos os jogadores estejam usando EXATAMENTE a mesma versão do MOD."
+        },
+        {
+            "questao": "Posso compartilhar o MOD com outros jogadores?",
+            "resposta": "NÃO, o MOD que você adquiriu é apenas para o seu uso conforme a nossa política de uso."
+        },
+        {
+            "questao": "É necessário extrair os arquivos após o download?",
+            "resposta": "Não é necessário extrair os arquivos, eles já estão em formato SCS e após o download pode ser colocado direto na pasta MOD do Jogo."
+        },
+        {
+            "questao": "Posso renomear os arquivos?",
+            "resposta": "Não recomendamos que faça isso, isso pode influenciar no funcionamento."
+        },
+        {
+            "questao": "Quais Mods de Mapas são compatíveis?",
+            "resposta": "Você poderá conferir aqui quais mods de mapa estão compatíveis com nossos MODs."
+        },
+        {
+            "questao": "Toda vez que o jogo atualiza os MODs precisam de serem atualizados?",
+            "resposta": "Nem sempre é necessário atualizar os MODs, na maioria das vezes que o jogo atualiza os MODs continuam funcionando normalmente sem precisar de atualização."
+        },
+        {
+            "questao": "Como vou receber as futuras atualizações?",
+            "resposta": "Sempre quanto houver necessidade de atualizações será informado na página no Facebook o detalhamento sobre as atualizações. É importando sempre nos acompanhar para ficar sempre atualizado. ;)"
+        }
+    ]
+}

@@ -7,6 +7,10 @@ import Home from './pages/Home';
 import Registrar from './pages/Registrar';
 import Perfil from './pages/Perfil';
 import ProdutoSaibaMais from './pages/ProdutoSaibaMais';
+import Sobre from './pages/Sobre';
+import Suporte from './pages/Suporte';
+import PerguntasFrequentes from './pages/PerguntasFrequentes';
+import Carrinho from './pages/Carrinho';
 
 function App(){
   const { usuario } = useContext(AuthContext);
@@ -28,6 +32,10 @@ function App(){
         <Route path="/" element={<Home />}/>
         <Route path="/produto/:codigo/:name" element={<ProdutoSaibaMais />}/>
         <Route path='*' element={<Erro404 />} />
+        <Route path='/sobre' element={<Sobre />} />
+        <Route path='/suporte' element={<Suporte /> } />
+        <Route path='/perguntas-frequentes' element={<PerguntasFrequentes />} />
+        <Route path='/carrinho' element={<Carrinho />} />
       </Routes>
     </BrowserRouter>
   );
