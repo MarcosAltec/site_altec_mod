@@ -10,7 +10,7 @@ function Formulario(props) {
         <form onSubmit={handleSubmit(props.onEnviar)}>
             <InputEmail register={register} error={errors.email} />
             <InputSenha register={register} error={errors.senha}/>
-            <Botao texto={props.texto}/>
+            <Botao tipo={props.tipo} texto={props.texto}/>
         </form>
     )
 }

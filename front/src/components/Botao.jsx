@@ -1,7 +1,7 @@
 function Botao(props) {
     return (
         <>
-         <button type="submit">{props.texto}</button>
+         <button type={props.tipo} onClick={props.clicar}>{props.texto}</button>
         </>
     )
 }

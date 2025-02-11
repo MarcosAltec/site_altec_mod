@@ -19,4 +19,16 @@ async function consultarProdutos(req, res) {
     }
 }
 
-module.exports = { cadastrarProdutos, consultarProdutos };
+async function consultarProduto(req, res) {
+    const codigo = req.query.codigo
+    const produto = await Produto.findOne({ codigo: codigo}).select('-link_download');
+    if (produto) {
+        // console.log("FFFF")
+        return res.status(201).json(produto);
+    } else {
+        // console.log("JJJJ")
+        return res.status(404).json({ msg: "Produto não encontrado"})
+    }
+}
+
+module.exports = { cadastrarProdutos, consultarProdutos, consultarProduto };

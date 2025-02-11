@@ -24,7 +24,7 @@ function Login() {
         <Conteudo>
             <h2>Página de Login</h2>
             {erro && <p>{erro}</p>}
-            <Formulario onEnviar={onEntrar} texto="Entrar"/>
+            <Formulario onEnviar={onEntrar} texto="Entrar" tipo="submit"/>
             <Link to="/registrar">Registrar</Link>
         </Conteudo>
     )

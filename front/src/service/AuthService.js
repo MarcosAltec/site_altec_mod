@@ -51,11 +51,27 @@ function pesquisarPedidos(usuario){
 function pesquisarProdutos(){
     return axios.get(`${url}/produtos`)
     .then((response) => {
+        // console.log('PESQ PROD', response.data)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
         if (error.response) {
             return {sucesso: false, mensagem: error.response.data}
+        } else {
+            return {sucesso: false, mensagem: "Ocorreu um erro!"}
+        }
+    })
+}
+
+function pesquisarProduto(codigo){
+    return axios.get(`${url}/produtos/id`, { params: { codigo }})
+    .then((response) => {
+        // console.log("AAAA", response.data)
+        return {sucesso: true, dados: response.data}
+    })
+    .catch((error) => {
+        if (error.response) {
+            return {sucesso: false, mensagem: error.response}
         } else {
             return {sucesso: false, mensagem: "Ocorreu um erro!"}
         }
@@ -70,18 +86,15 @@ function verificaToken(token, email) {
         }
     })
     .then((response) => {
-        console.log("VERIFICA TOKEN RETURN", response.data)
         return { sucesso: true, dados: response.data }
     })
     .catch((error) => {
         if (error.response) {
-            // console.log("ERRO RESPONSE", error.response)
             return { sucesso: false, mensagem: error.response.data };
         } else {
-            // console.log("ERRO RESPONSE ELSE", error.response)
             return { sucesso: false, mensagem: 'Ocorreu um erro!' };
         }
     })
 }
 
-export { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, verificaToken };
+export { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, verificaToken, pesquisarProduto };

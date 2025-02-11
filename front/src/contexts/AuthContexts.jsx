@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, verificaToken } from "../service/AuthService";
+import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, pesquisarProduto, verificaToken } from "../service/AuthService";
 
 const AuthContext = createContext();
 
@@ -48,21 +48,37 @@ function AuthProvider(props) {
 
     const consultarProdutos = async () => {
         const resposta = await pesquisarProdutos();
-        return resposta.dados;
+        if (resposta.sucesso) {
+            return resposta.dados;
+        } else {
+            return resposta.mensagem
+        }        
     };
 
-    const searchProduct = async (id) => {
-        const resposta = await pesquisarProdutos();
-        const resultado = []
-        for (let index = 0; index < resposta.dados.length; index++) {
-            if(resposta.dados[index].codigo == id.codigo){
-                resultado.push(resposta.dados[index]);
-                console.log(typeof(resultado))
-            };  
-        };
-        return resultado;
+    const searchProduct = async (codigo) => {
+        // console.log("SEACH AQUIII")
+        const resposta = await pesquisarProduto(codigo);
+        if (resposta.sucesso) {
+            // console.log("SEACH TRUE", resposta.dados)
+            return [resposta.dados];
+        } else {
+            // console.log("SEACH FALSE", resposta.mensagem)
+            return resposta.mensagem
+        }
     };
 
+    const adicionarCarrinho = (codigo) => {
+        localStorage.setItem('produto', codigo);
+    }
+
+    const resgatarCarrinho = () => {
+        const resposta = localStorage.getItem('produto');
+        if (resposta) {
+            return resposta;
+        } else {
+            return "Carrinho vazio";
+        }
+    }
     
     useEffect(() => {
         if (usuario.logado === false) {
@@ -86,7 +102,7 @@ function AuthProvider(props) {
             }
         }})    
 
-    const contexto = {usuario, pedido, login, signup, meusPedidos, consultarProdutos, searchProduct}
+    const contexto = { usuario, pedido, login, signup, meusPedidos, consultarProdutos, searchProduct, adicionarCarrinho, resgatarCarrinho }
     return (
         <AuthContext.Provider value={contexto}>
             {props.children}
@@ -95,3 +111,15 @@ function AuthProvider(props) {
 }
 
 export { AuthContext, AuthProvider };
+
+    // const searchProduct = async (id) => {
+    //     const resposta = await pesquisarProdutos();
+    //     const resultado = []
+    //     for (let index = 0; index < resposta.dados.length; index++) {
+    //         if(resposta.dados[index].codigo == id.codigo){
+    //             resultado.push(resposta.dados[index]);
+    //             console.log(typeof(resultado))
+    //         };  
+    //     };
+    //     return resultado;
+    // };
