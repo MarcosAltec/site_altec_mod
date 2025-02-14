@@ -9,7 +9,6 @@ const routerApidocs = require('./routes/apidocs');
 const usersRouter = require('./routes/usuarios');
 const productRouter = require('./routes/produtos');
 const orderRouter = require('./routes/pedidos');
-const userRouterEmail = require('./routes/userRouter')
 
 var app = express();
 
@@ -26,12 +25,11 @@ app.use('/api-docs', routerApidocs);
 app.use('/', usersRouter);
 app.use('/produtos', productRouter);
 app.use('/pedidos', orderRouter);
-app.use('/api/users', userRouterEmail);
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+// const PORT = process.env.PORT || 3001;
+// app.listen(PORT, () => {
+//     console.log(`Servidor rodando na porta ${PORT}`);
+// });
 
 
 module.exports = app;

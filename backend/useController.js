@@ -1,21 +1,20 @@
 const nodemailer = require('nodemailer');
 
 const transport = nodemailer.createTransport({
+    name: "atualizacao@altecmod.com",
     host: "mail.altecmod.com",
+    service: "mail.altecmod.com",
     port: 465,
     secure: true,
     auth: {
         user: "atualizacao@altecmod.com",
         pass: 'Philco123@',
     },
-    // debug: true,
-    // logger: true
-
 });
 
 transport.sendMail({
     from: 'Manual do dev <atualizacao@altecmod.com>',
-    to: 'atualizacao@altecmod.com, marcospassos1998@hotmail.com, marcospassos2211@gmail.com, marcos.passos@iesb.edu.br',
+    to: 'marcospassos1998@hotmail.com',
     subject: 'Enviando email com Nodemailer',
     html: '<h1>Olá, dev</h1> Esse email foi enviado da API',
     text: 'Olá, este email foi enviado da API',
