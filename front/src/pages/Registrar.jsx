@@ -1,41 +1,76 @@
-import { useContext, useState } from "react";
-import { useNavigate, Link } from "react-router-dom"
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../contexts/AuthContexts";
 import Conteudo from "../components/Conteudo";
 import InputEmail from "../components/InputEmail";
 import Botao from "../components/Botao";
 import { useForm } from "react-hook-form";
+import InputCodigo from "../components/InputCodigo";
+import InputNome from "../components/InputNome";
+import InputSenha from "../components/InputSenha"
 
 function Registrar() {
+    const navigate = useNavigate();
+    const { usuario, validarCodigo, tempEmail, signup } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors }} = useForm({})
-    const [ email, setEmail ] = useState({ estado: false, email: null });
 
-    const onConfirmar = (data) => {
-        console.log("Passou aqui", data.email)
-        setEmail({email: data.email})
+    const onEnviar = async (data) => {
+        console.log('data', data)
+        await tempEmail(data.email)
     }
 
-    const onValidar = () => {
-        console.log("Validado")
+    const onValidar = async (data) => {
+        await validarCodigo(data);
     }
 
-    console.log("ESTADO", email, setEmail)
+    const onCadastrar = async (data) => {
+        const pessoa = {
+            name: data.name,
+            senha: data.senha
+        }
+        const resposta = await signup(pessoa);
+        if (resposta) {
+            navigate('/login')
+        }
+    }
 
     return(
         <Conteudo>
             <h2>Registrar</h2>
 
-            <form onSubmit={handleSubmit(onConfirmar)}>
-                <InputEmail register={register} error={errors.email}/>
-                <Botao tipo="submit" texto="Enviar"/>
-            </form>
-            <Link to="/login">Login</Link>
-            {email.estado && (
+            {!usuario.email ? (
+                <>
+                    <p>Por favor, insira um email válido.</p>            
+                    <form onSubmit={handleSubmit(onEnviar)}>
+                        <InputEmail register={register} error={errors.email}/>
+                        <Botao tipo="submit" texto="Enviar"/>
+                    </form>
+                    <Link to="/login">Login</Link>
+                </>
+            ) : (
+                <>
                 <div>
-                    <p>Um código de validação foi enviado para seu e-mail. Por favor, verifique e insira o código abaixo:</p>
-                    <input type="text" placeholder="Código de validação" />
-                    <Botao tipo="submit" texto="Validar" onClick={onValidar} />
+                {!usuario.status ? (
+                <>
+                    <p>Para continuar com o processo de cadastro, é necessário validar o endereço de e-mail fornecido. Enviamos um código de verificação para o seu e-mail {usuario.email}. Por favor, verifique sua caixa de entrada e insira o código no campo abaixo.</p>
+                    <form onSubmit={handleSubmit(onValidar)}>
+                        <InputCodigo register={register} error={errors.number}/>
+                        <Botao tipo="submit" texto="Validar"/>
+                    </form>
+                </>
+                ) : (
+                    <>
+                    <form onSubmit={handleSubmit(onCadastrar)}>
+                        {<p>Seu email: {usuario.email}</p>}
+                        <p>Agora vamos cadastrar seu nome e senha</p>
+                        <InputNome register={register} error={errors.name}/> <br/>
+                        <InputSenha register={register} error={errors.senha}/> <br/>
+                        <Botao tipo="submit" texto="Cadastrar"/>
+                    </form>
+                    </>
+                )}
                 </div>
+                </>
             )}
         </Conteudo>
     )
@@ -48,7 +83,7 @@ export default Registrar;
     // // const [erro, setErro] = useState("deu erro");
     // // const navigate = useNavigate();
     // // const {signup} = useContext(AuthContext)
-    // // const onConfirmar = async (data) => {
+    // // const onEnviar = async (data) => {
     // //     const resultado = await signup(data);
     // //     if (resultado) {
     // //         setErro(resultado);
@@ -57,4 +92,4 @@ export default Registrar;
     // //         navigate("/perfil");
     // //     }
     // // }
-    // {/* <Formulario onEnviar={onConfirmar} texto="Confirmar" /> */}
+    // {/* <Formulario onEnviar={onEnviar} texto="Confirmar" /> */}

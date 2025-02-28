@@ -11,16 +11,23 @@ function Perfil() {
     useEffect(() => {
         const fetchData = async () => {
             const lista = await meusPedidos();
-            const pedidos = lista.dados
-            setPedidos(pedidos)
+            // console.log("JJJJJ", lista)
+            if (lista) {
+                const pedidos = lista.dados
+                setPedidos(pedidos)
+            }
         };
         fetchData();   
     }, [meusPedidos]);
-
+    // console.log("PERFIL PED", pedidos)
     return (
         <Conteudo>
             <h2>Perfil do usuário</h2>
-            <MeusProdutos itens={pedidos}/>
+            {pedidos ? (
+                <MeusProdutos itens={pedidos}/>
+            ) : (
+                <p>Sem produtos</p>
+            )}
             <Link to="/">Home</Link>
         </Conteudo>
     )

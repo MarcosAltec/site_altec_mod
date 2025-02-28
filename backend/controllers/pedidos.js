@@ -3,6 +3,7 @@ const { Produto } = require('../models/produto');
 const { Usuario } = require('../models/usuario');
 
 async function buscarPedidos(req, res) {
+    console.log("BACK PED", req.query.identificador)
     try {
         const pedidos = await Pedido.find({ usuario_id: req.query.identificador });
         const lista = []

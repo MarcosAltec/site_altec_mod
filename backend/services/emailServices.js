@@ -1,32 +1,32 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
+    name: 'Altec Mod',
     host: 'mail.altecmod.com',
+    service: 'mail.altecmod.com',
     port: 465,
     secure: true, // true para usar SSL/TLS
     auth: {
-        user: 'atualizacao@altecmod.com', // Seu e-mail
-        pass: 'Philco123@' // Sua senha de e-mail
+        user: 'atualizacao@altecmod.com',
+        pass: 'Philco123@'
     }
 });
 
-const sendEmail = (to, subject, text) => {
+const sendVerificationCode  = async (email, codigo) => {
     const mailOptions = {
-        from: 'atualizacao@altecmod.com', // Seu e-mail
-        to: 'marcospassos2211@gmail.com',
-        subject: subject, // Assunto do e-mail
-        text: text // Corpo do e-mail
+        from: 'Verificação de Email<atualizacao@altecmod.com>', // Seu e-mail
+        to: email,
+        subject: 'Código de verificação',
+        html: `<h2>Seu código de verificação</h2><h1>${codigo}</h1>`,
+        text: `Seu código de verificação: ${codigo}`
     };
-
-    return transporter.sendMail(mailOptions)
-    .then((info) => {
-        console.log('E-mail enviado:', info.response);
-    })
-    .catch((error) => {
-        console.error('Erro ao enviar e-mail:', error);
-    });
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('E-mail de verificação enviado para', email);
+    } catch (error) {
+        console.error('Erro ao enviar e-mail de verificação:', error);
+        throw error;
+    }
 };
 
-module.exports = {
-    sendEmail
-};
+module.exports = { sendVerificationCode };

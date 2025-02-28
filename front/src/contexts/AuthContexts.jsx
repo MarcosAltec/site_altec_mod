@@ -1,36 +1,50 @@
 import { createContext, useEffect, useState } from "react";
-import { autenticar, cadastrar, pesquisarPedidos, pesquisarProdutos, pesquisarProduto, verificaToken } from "../service/AuthService";
+import { 
+    autenticar, 
+    cadastrar, 
+    pesquisarPedidos, 
+    pesquisarProdutos, 
+    pesquisarProduto, 
+    verificarCodigo, 
+    verificaToken,
+    cadastroTemporario
+} from "../service/AuthService";
 
 const AuthContext = createContext();
 
 function AuthProvider(props) {
-    const [ usuario, setUsuario ] = useState({ token: null, email: null, id: null, logado: false });
-    const [ pedido, setPedido ] = useState({id: null, descricao: null, link: null})
-
+    const [ usuario, setUsuario ] = useState({ token: null, nome: null, email: null, id: null, logado: false, status: false });
+    const [ pedido, setPedido ] = useState([])
+    // console.log("USUARIO", usuario);
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
 
         if (resposta.sucesso) {
             setUsuario({
+                nome: resposta.dados.nome,
                 token: resposta.dados.token,
                 email: resposta.dados.email,
                 id: resposta.dados.id,
                 logado: true
             });
-            setPedido(resposta.dados.pedidos);
-            return resposta.dados;
+            console.log("HHHH", resposta)
+            // setPedido(resposta.dados.pedidos);
+            return {sucesso: true, dados: resposta.dados};
         } else {
-            return resposta.mensagen;
+            console.log("ERROR HHHH", resposta)
+            return {sucesso: false, mensagem: "Ocorreu um erro"};
         }
     }
 
-    const signup = async (usuario) => {
-        const resposta = await cadastrar(usuario);
+    const signup = async (dados) => {
+        const pessoa = {
+            name: dados.name,
+            email: usuario.email,
+            senha: dados.senha
+        }
+        const resposta = await cadastrar(pessoa);
         if (resposta.sucesso) {
-            setUsuario({
-                token: resposta.dados.token,
-                logado: true});
-            return null
+            return true
         } else {
             return resposta.mensagem
         }
@@ -38,7 +52,7 @@ function AuthProvider(props) {
 
     const meusPedidos = async () => {
         const resposta = await pesquisarPedidos(usuario);
-
+        // console.log("MEUS PED", resposta)
         if (resposta.sucesso) {
             return resposta;
         } else {
@@ -56,13 +70,10 @@ function AuthProvider(props) {
     };
 
     const searchProduct = async (codigo) => {
-        // console.log("SEACH AQUIII")
         const resposta = await pesquisarProduto(codigo);
         if (resposta.sucesso) {
-            // console.log("SEACH TRUE", resposta.dados)
             return [resposta.dados];
         } else {
-            // console.log("SEACH FALSE", resposta.mensagem)
             return resposta.mensagem
         }
     };
@@ -77,6 +88,44 @@ function AuthProvider(props) {
             return resposta;
         } else {
             return "Carrinho vazio";
+        }
+    }
+
+    const tempEmail = async (email) => {
+        const resposta = await cadastroTemporario(email);
+        if (resposta.sucesso) {
+            console.log("DEU CERTO", resposta);
+            setUsuario({
+                token: null,
+                email: resposta.email,
+                id: null,
+                logado: false,
+                status: false
+            });
+            return resposta.sucesso
+        } else {
+            // console.log("FALHOU", resposta);
+            return resposta.sucesso
+        }
+    }
+
+    const validarCodigo = async (dados) => {
+        const email = dados.email
+        const codigo = dados.number
+        const resposta = await verificarCodigo(email, codigo);
+        if (resposta) {
+            setUsuario({
+                token: null,
+                email: resposta.email,
+                id: null,
+                logado: false,
+                status: true
+            });
+            console.log("VALIDA COD", resposta)
+            // return resposta; 
+        } else {
+            console.log("VALIDA COD FAIL")
+            return "Falha ao verificar codigo";
         }
     }
     
@@ -102,7 +151,19 @@ function AuthProvider(props) {
             }
         }})    
 
-    const contexto = { usuario, pedido, login, signup, meusPedidos, consultarProdutos, searchProduct, adicionarCarrinho, resgatarCarrinho }
+    const contexto = { 
+        usuario,
+        pedido, 
+        login, 
+        signup, 
+        meusPedidos, 
+        consultarProdutos, 
+        searchProduct, 
+        adicionarCarrinho, 
+        resgatarCarrinho,
+        validarCodigo,
+        tempEmail
+     }
     return (
         <AuthContext.Provider value={contexto}>
             {props.children}

@@ -23,7 +23,6 @@ function App(){
           <Route path='/registrar' element={<Registrar />}/>
           <Route path="/login" element={<Login />}/>
           </>
-          
         ) : (
           <>
           <Route path="/perfil" element={<Perfil />}/>

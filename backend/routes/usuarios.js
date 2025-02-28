@@ -7,5 +7,7 @@ router.post('/usuarios', controller.validarDados, controller.criar);
 router.post('/login', controller.entrar);
 router.delete('/usuarios/:id', controller.deletar);
 router.get('/validar-token', validarToken, controller.acessarViaToken);
+router.post('/email-temp', controller.tempEmail);
+router.get('/validar-codigo', controller.validarEmail);
 
 module.exports = router;

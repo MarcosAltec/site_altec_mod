@@ -11,12 +11,13 @@ function Login() {
 
     const onEntrar = async (data) => {
         const resultado = await login(data);
-        // console.log('LOGIN PAGINA', resultado.email)
-        if (erro) {
-            setErro(erro);
-        } else {
-            setErro("")
+        console.log('LOGIN PAGINA', resultado)
+        if (resultado.sucesso) {
             navigate("/perfil")
+            setErro("")
+        } else {
+            alert("Nome ou email iválidos")
+            setErro(erro);            
         }
     }
 
