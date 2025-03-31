@@ -4,7 +4,7 @@ function MeusProdutos(props) {
 
     return (
     <>
-        <h2>Meu MODs</h2>
+        <p>Nesta página você poderá baixar todos os seu MODs.</p>
         <ul>
             {props.itens.map((item, index) => (
                 <li key={index}>

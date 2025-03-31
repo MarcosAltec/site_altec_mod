@@ -1,26 +1,50 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../contexts/AuthContexts";
 import Conteudo from "../components/Conteudo";
-import InputEmail from "../components/InputEmail";
 import Botao from "../components/Botao";
 import { useForm } from "react-hook-form";
-import InputCodigo from "../components/InputCodigo";
 import InputNome from "../components/InputNome";
 import InputSenha from "../components/InputSenha"
+import ValidaEmail from "../components/ValidaEmail";
+import ValidaCodigo from "../components/ValidaCodigo";
+import './Login.css'
+import Rodape from "../components/Rodape";
 
 function Registrar() {
     const navigate = useNavigate();
     const { usuario, validarCodigo, tempEmail, signup } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors }} = useForm({})
+    const [ validacao, setValidacao ] = useState({ status: null, msg: null })
 
     const onEnviar = async (data) => {
-        console.log('data', data)
-        await tempEmail(data.email)
+        const resposta = await tempEmail(data.email)
+        if (resposta.sucesso) {
+            setValidacao({
+                status: null,
+                msg: null
+            })
+        } else {
+            setValidacao({
+                status: resposta.sucesso,
+                msg: resposta.mensagem
+            })
+        }
     }
 
     const onValidar = async (data) => {
-        await validarCodigo(data);
+        const resposta = await validarCodigo(data);
+        if (resposta.sucesso) {
+            setValidacao({
+                status: resposta.sucesso,
+                msg: resposta.dados
+            })
+        } else {
+            setValidacao({
+                status: resposta.sucesso,
+                msg: resposta.dados
+            })
+        }
     }
 
     const onCadastrar = async (data) => {
@@ -33,31 +57,24 @@ function Registrar() {
             navigate('/login')
         }
     }
-
     return(
+        <>
         <Conteudo>
+            <div className="pagLogin">
             <h2>Registrar</h2>
-
             {!usuario.email ? (
                 <>
-                    <p>Por favor, insira um email válido.</p>            
-                    <form onSubmit={handleSubmit(onEnviar)}>
-                        <InputEmail register={register} error={errors.email}/>
-                        <Botao tipo="submit" texto="Enviar"/>
-                    </form>
-                    <Link to="/login">Login</Link>
+                    <ValidaEmail onSubmit={onEnviar} parag="Por favor, insira um email válido." tipo="submit" texto="Enviar" msg={validacao.msg}/>
+                    <Link to="/login">Login</Link>                    
                 </>
             ) : (
                 <>
                 <div>
-                {!usuario.status ? (
-                <>
-                    <p>Para continuar com o processo de cadastro, é necessário validar o endereço de e-mail fornecido. Enviamos um código de verificação para o seu e-mail {usuario.email}. Por favor, verifique sua caixa de entrada e insira o código no campo abaixo.</p>
-                    <form onSubmit={handleSubmit(onValidar)}>
-                        <InputCodigo register={register} error={errors.number}/>
-                        <Botao tipo="submit" texto="Validar"/>
-                    </form>
-                </>
+                {!validacao.status ? (
+                    <ValidaCodigo 
+                    parag={`Para continuar com o processo de cadastro, é necessário validar o endereço de e-mail fornecido. Enviamos um código de verificação para o seu e-mail ${usuario.email}. Por favor, verifique sua caixa de entrada e insira o código no campo abaixo.`}
+                    onChecar={onValidar} tipo="submit" texto="Validar" msg={validacao.msg}
+                    />
                 ) : (
                     <>
                     <form onSubmit={handleSubmit(onCadastrar)}>
@@ -72,7 +89,10 @@ function Registrar() {
                 </div>
                 </>
             )}
+            </div>
         </Conteudo>
+        <Rodape />
+        </>
     )
 }
 

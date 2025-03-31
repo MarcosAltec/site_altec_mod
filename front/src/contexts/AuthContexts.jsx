@@ -7,7 +7,11 @@ import {
     pesquisarProduto, 
     verificarCodigo, 
     verificaToken,
-    cadastroTemporario
+    cadastroTemporario,
+    criarPedido,
+    buscarCliente,
+    resgatarEmail,
+    novaSenha
 } from "../service/AuthService";
 
 const AuthContext = createContext();
@@ -15,7 +19,7 @@ const AuthContext = createContext();
 function AuthProvider(props) {
     const [ usuario, setUsuario ] = useState({ token: null, nome: null, email: null, id: null, logado: false, status: false });
     const [ pedido, setPedido ] = useState([])
-    // console.log("USUARIO", usuario);
+    console.log("USUARIO", usuario);
     const login = async (usuario) => {
         const resposta = await autenticar(usuario);
 
@@ -27,11 +31,8 @@ function AuthProvider(props) {
                 id: resposta.dados.id,
                 logado: true
             });
-            console.log("HHHH", resposta)
-            // setPedido(resposta.dados.pedidos);
             return {sucesso: true, dados: resposta.dados};
         } else {
-            console.log("ERROR HHHH", resposta)
             return {sucesso: false, mensagem: "Ocorreu um erro"};
         }
     }
@@ -42,6 +43,7 @@ function AuthProvider(props) {
             email: usuario.email,
             senha: dados.senha
         }
+        console.log("HHHH", pessoa)
         const resposta = await cadastrar(pessoa);
         if (resposta.sucesso) {
             return true
@@ -50,22 +52,28 @@ function AuthProvider(props) {
         }
     }
 
-    const meusPedidos = async () => {
-        const resposta = await pesquisarPedidos(usuario);
-        // console.log("MEUS PED", resposta)
-        if (resposta.sucesso) {
-            return resposta;
+    const meusPedidos = async (email) => {
+        let itens = {}
+        if (email) {
+            const resposta = await pesquisarPedidos(email);
+            itens = resposta
         } else {
-            return resposta.mensagem
+            const resposta = await pesquisarPedidos(usuario);
+            itens = resposta
+        }
+        if (itens.sucesso) {
+            return itens;
+        } else {
+            return itens.mensagem
         }
     };
 
     const consultarProdutos = async () => {
         const resposta = await pesquisarProdutos();
         if (resposta.sucesso) {
-            return resposta.dados;
+            return {status: true, response: resposta.dados};
         } else {
-            return resposta.mensagem
+            return {status: false, response: resposta.mensagem}
         }        
     };
 
@@ -94,7 +102,6 @@ function AuthProvider(props) {
     const tempEmail = async (email) => {
         const resposta = await cadastroTemporario(email);
         if (resposta.sucesso) {
-            console.log("DEU CERTO", resposta);
             setUsuario({
                 token: null,
                 email: resposta.email,
@@ -104,28 +111,18 @@ function AuthProvider(props) {
             });
             return resposta.sucesso
         } else {
-            // console.log("FALHOU", resposta);
-            return resposta.sucesso
+            return resposta
         }
     }
 
     const validarCodigo = async (dados) => {
-        const email = dados.email
+        const email = usuario.email
         const codigo = dados.number
         const resposta = await verificarCodigo(email, codigo);
-        if (resposta) {
-            setUsuario({
-                token: null,
-                email: resposta.email,
-                id: null,
-                logado: false,
-                status: true
-            });
-            console.log("VALIDA COD", resposta)
-            // return resposta; 
+        if (resposta.sucesso) {
+            return resposta; 
         } else {
-            console.log("VALIDA COD FAIL")
-            return "Falha ao verificar codigo";
+            return resposta;
         }
     }
     
@@ -139,7 +136,8 @@ function AuthProvider(props) {
                 .then((resposta) => {
                     if (resposta.sucesso) {
                         setUsuario({
-                            token, 
+                            token,
+                            nome: resposta.dados.nome,
                             email: resposta.dados.email,
                             id: resposta.dados.id,
                             logado: true
@@ -149,7 +147,53 @@ function AuthProvider(props) {
                     }
                 })
             }
-        }})    
+        }})
+        
+    const registrarPedido = async (dados) => {
+        const resposta = await criarPedido(dados);
+        return resposta
+    };
+
+    const localizarCliente = async (dados) => {
+        const resposta = await buscarCliente(dados);
+        if (resposta) {
+            return resposta;
+        } else {
+            return "Usuário não encontrado";
+        }
+    };
+
+    const recuperarEmail = async (dados) => {
+        const resposta = await resgatarEmail(dados);
+        if (resposta.sucesso) {
+            setUsuario({
+                token: null,
+                email: resposta.email,
+                id: null,
+                logado: false,
+                status: true
+            });
+        } else {
+            return "Email não encontrado";
+        }
+    }
+
+    const redefinirSenha = async (dados) => {
+        const resposta = await novaSenha({ email: usuario.email, senha: dados.senha })
+        if (resposta.sucesso) {
+            setUsuario({
+                token: null,
+                email: null,
+                id: null,
+                logado: false,
+                status: false
+            });
+            return resposta
+        } else {
+            // console.log("RESPOSTA SENHA ELSE", resposta)
+            return resposta
+        }
+    }
 
     const contexto = { 
         usuario,
@@ -162,7 +206,11 @@ function AuthProvider(props) {
         adicionarCarrinho, 
         resgatarCarrinho,
         validarCodigo,
-        tempEmail
+        tempEmail,
+        registrarPedido,
+        localizarCliente,
+        recuperarEmail,
+        redefinirSenha
      }
     return (
         <AuthContext.Provider value={contexto}>

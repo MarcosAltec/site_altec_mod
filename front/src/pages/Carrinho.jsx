@@ -10,6 +10,7 @@ function Carrinho() {
     const [erro, setErro] = useState("");
     const [item, setItem] = useState([]);
     const produto = item[0];
+    console.log("PRODUTO 0", produto)
 
     useEffect(() => {
         const fetchData =  async () => {
@@ -24,6 +25,18 @@ function Carrinho() {
         fetchData();
     }, [resgatarCarrinho, searchProduct]);
 
+    const formataPreco = (preco) => {
+        return Number(preco).toFixed(2).replace('.', ','); // Converte para "22,90"
+    };
+
+    const linkCompra = () => {
+        if (produto && produto.link_compra) {
+            window.open(produto.link_compra, '_blank'); // Abre o link em uma nova guia
+        } else {
+            console.error("Link de compra não disponível."); // Verifica se o link existe
+        }    
+    }
+
     return(
         <>
             <Cabecalho />
@@ -32,7 +45,8 @@ function Carrinho() {
                     <p>{erro}</p>
                 ) : (
                     <>
-                    <h3>AVISO! No momento o nosso site está suportando apenas um produto no carrinho por vez!</h3>
+                    <h3>AVISO! No momento o nosso site está suportando apenas um produto por vez no carrinho!</h3>
+                    <p>Estamos trabalhando para melhorar a sua experiência em nosso site.</p>
                     <table>
                         <thead>
                             <tr>
@@ -46,7 +60,7 @@ function Carrinho() {
                                 <tr>
                                     <td><img src={produto.link_foto} alt="" /></td>
                                     <td>{produto.nome_mod}</td>
-                                    <td>{produto.preco}</td>
+                                    <td>R$ {formataPreco(produto.preco)}</td>
                                     <td>1</td>
                                 </tr>
                             ) : (
@@ -56,7 +70,7 @@ function Carrinho() {
                             )}
                         </tbody>
                     </table>
-                    <Botao tipo="submit" texto="Comprar" />
+                    <Botao tipo="submit" texto="Ir para pagamento" clicar={linkCompra} />
                     </>
                 )}
             </Conteudo>

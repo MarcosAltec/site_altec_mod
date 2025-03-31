@@ -3,9 +3,12 @@ const { Produto } = require('../models/produto');
 const { Usuario } = require('../models/usuario');
 
 async function buscarPedidos(req, res) {
-    console.log("BACK PED", req.query.identificador)
+    // console.log("BACK PED 1", req.query.cliente)
+    const usuario = await Usuario.findOne({ email: req.query.cliente.email })
+    // console.log("BACK PED 2", usuario);
     try {
-        const pedidos = await Pedido.find({ usuario_id: req.query.identificador });
+        const pedidos = await Pedido.find({ usuario_id: usuario._id });
+        // console.log("BACK PED PEDIDO", pedidos);
         const lista = []
 
         if (pedidos.length === 0) {
@@ -23,8 +26,9 @@ async function buscarPedidos(req, res) {
     }
 };
 
-async function criarPedido (req, res) {    
-    const buscarProduto = await Produto.findOne({ codigo: req.body.codigo_mod}).select('nome_mod preco')
+async function criarPedido (req, res) {
+    // console.log("TENTAR CADASTRAR PED", req.body);
+    const buscarProduto = await Produto.findOne({ codigo: req.body.number}).select('nome_mod preco')
     const buscarUsuario = await Usuario.findOne({ email: req.body.email}).select('email')
     if (!buscarProduto || !buscarUsuario) {
         return res.status(404).json({ msg: 'Produto ou Usuário não encontrado!' });

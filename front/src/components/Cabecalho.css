@@ -1,12 +1,57 @@
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex; 
+    box-sizing: border-box;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+header a {
+    color: #1a4164
+}
+header a:hover {
+    color: #ffffff;
+}
+.header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 5%; 
+    margin: 0% 10%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header div {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: rgb(63, 63, 63);
+    flex-direction: row;
+}
+.header span .linkCabecalho:hover{
+    color: #0088ff;
+}
+nav {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-nav {
-    justify-content: space-evenly;
-    gap: 20px;
+nav span {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+}
+
+.barrasMenus {
+    display: flex;
+    justify-content: space-around;
+}
+.barrasMenus div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.barrasMenus div:hover {
+    background-color: #0088ff;
 }

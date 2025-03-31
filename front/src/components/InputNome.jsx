@@ -1,3 +1,5 @@
+import './Inputs.css'
+
 function InputNome(props) {
     const regras = {
         required: "Nome é obrigatório"

@@ -7,11 +7,9 @@ function autenticar(usuario) {
     .then((response) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('email', response.data.email);
-        // console.log("AUTENTICAR", response.data)
         return { sucesso: true, dados: response.data };
     })
     .catch((error) => {
-        // console.log("ERROR AUTENTICAR", error)
         if (error.response) {
             return{sucesso: false, mensagem: error.response.data};
         } else {
@@ -21,10 +19,8 @@ function autenticar(usuario) {
 };
 
 function cadastrar(usuario) {
-    // console.log("cadas", usuario)
     return axios.post(`${url}/usuarios`, {nome: usuario.name, email: usuario.email, senha: usuario.senha})
     .then((response) => {
-        console.log("cadas", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
@@ -37,10 +33,8 @@ function cadastrar(usuario) {
 };
 
 function pesquisarPedidos(usuario){
-    console.log("GGG", usuario.id)
-    return axios.get(`${url}/pedidos`, {params: { identificador: usuario.id }})
+    return axios.get(`${url}/pedidos`, {params: { cliente: usuario }})
     .then((response) => {
-        console.log("PPP", response)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
@@ -49,14 +43,12 @@ function pesquisarPedidos(usuario){
         } else {
             return {sucesso: false, mensagem: "Ocorreu um erro!"}
         }
-        
     })
 }
 
 function pesquisarProdutos(){
     return axios.get(`${url}/produtos`)
     .then((response) => {
-        // console.log('PESQ PROD', response.data)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
@@ -71,7 +63,6 @@ function pesquisarProdutos(){
 function pesquisarProduto(codigo){
     return axios.get(`${url}/produtos/id`, { params: { codigo }})
     .then((response) => {
-        // console.log("AAAA", response.data)
         return {sucesso: true, dados: response.data}
     })
     .catch((error) => {
@@ -86,24 +77,24 @@ function pesquisarProduto(codigo){
 function verificarCodigo(email, codigo){
     return axios.get(`${url}/validar-codigo`, { params: { email: email, codigo: codigo }})
     .then((response) => {
-        // console.log("CODIGO AA", response)
-        return { sucesso: true, email: response.data};
+        return { sucesso: true, dados: response.data};
     })
     .catch((error) => {
-        // console.log("CODIGO BB", error)
-        return { sucesso: false};
+        if (error.response) {
+            return {sucesso: false, dados: error.response.data.msg}
+        } else {
+            return { sucesso: false, msg: "Erro desconhecido."}
+        }
     })
 }
 
 function cadastroTemporario(email){
     return axios.post(`${url}/email-temp`, {email: email})
     .then((response) => {
-        // console.log("RESPONSE II", response)
         return {sucesso: true, email: response.data}
     })
     .catch((error) => {
-        // console.log("RESPONSE JJ", error.response.data, error.response.status)
-        return {sucesso: false, mensagem: error.response}
+        return {sucesso: false, mensagem: error.response.data.msg}
     });
 }
 
@@ -126,6 +117,50 @@ function verificaToken(token, email) {
     })
 }
 
+function criarPedido(dados) {
+    return axios.post(`${url}/pedidos`, dados)
+    .then((response) => {
+        return "Pedido cadastrado com sucesso";
+    })
+    .catch((error) =>{
+        return "Falha ao cadastrar pedido"
+    })
+}
+
+function buscarCliente(dados) {
+    return axios.get(`${url}/buscar-cliente`, {params: dados})
+    .then((response) => {
+        return response.data;
+    })
+    .catch((error) => {
+        if (error.response) {
+            return { sucesso: false, mensagem: error.response };
+        } else {
+            return { sucesso: false, mensagem: "Ocorreu um erro desconhecido!" };
+        };
+    })
+}
+
+function resgatarEmail(email) {
+    return axios.post(`${url}/recuperar-email`, {email})
+    .then ((response) => {
+        return { sucesso: true, email: response.data};
+    })
+    .catch((error) => {
+        return { sucesso: false, mensagem: error.response };
+    })
+}
+
+function novaSenha(dados){
+    console.log("DADOS SENHA", dados)
+    return axios.post(`${url}/nova-senha`, dados)
+    .then((response) => {
+        return { sucesso: true, dados: response};
+    })
+    .catch((error) => {
+        return { sucesso: false, dados: error};
+    })
+}
 export { 
     autenticar,
     cadastrar, 
@@ -134,5 +169,9 @@ export {
     verificaToken, 
     pesquisarProduto, 
     verificarCodigo,
-    cadastroTemporario
+    cadastroTemporario,
+    criarPedido,
+    buscarCliente,
+    resgatarEmail,
+    novaSenha
 };

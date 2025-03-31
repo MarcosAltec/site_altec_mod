@@ -8,21 +8,25 @@ import Conteudo from "../components/Conteudo";
 function Home() {
     const { consultarProdutos } = useContext(AuthContext);
     const [produtos, setProduto] = useState([])
+    const [status, setStatus] = useState({})
 
     useEffect(() => {
         const fetchData = async () => {
             const produto = await consultarProdutos();
-            setProduto(produto)
+            setProduto(produto.response)
+            setStatus(produto.status)
         };
         fetchData();
     }, [consultarProdutos]);
-
     return(
         <>
             <Cabecalho />
             <Conteudo>
-                <h1>Página Inicial</h1>
-                <Produto itens={produtos}/>
+                {status ? (
+                    <Produto itens={produtos}/>
+                ) : (
+                    <p>Falha ao carregar produtos!</p>
+                )}                    
             </Conteudo>
             <Rodape />
         </>

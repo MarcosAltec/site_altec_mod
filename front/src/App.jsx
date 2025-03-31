@@ -1,3 +1,4 @@
+import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContexts';
@@ -11,6 +12,9 @@ import Sobre from './pages/Sobre';
 import Suporte from './pages/Suporte';
 import PerguntasFrequentes from './pages/PerguntasFrequentes';
 import Carrinho from './pages/Carrinho';
+import PerfilHost from './pages/PerfilHost';
+import RecuperarSenha from './pages/RecuperarSenha';
+import Teste from './pages/Teste/Teste';
 
 function App(){
   const { usuario } = useContext(AuthContext);
@@ -22,10 +26,12 @@ function App(){
           <>
           <Route path='/registrar' element={<Registrar />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/recuperar-senha" element={<RecuperarSenha />}/>
           </>
         ) : (
           <>
           <Route path="/perfil" element={<Perfil />}/>
+          <Route path="/perfil-host" element={<PerfilHost />}/>
           </>
         )}
         <Route path="/" element={<Home />}/>
@@ -35,6 +41,7 @@ function App(){
         <Route path='/suporte' element={<Suporte /> } />
         <Route path='/perguntas-frequentes' element={<PerguntasFrequentes />} />
         <Route path='/carrinho' element={<Carrinho />} />
+        <Route path='/teste' element={<Teste />} />
       </Routes>
     </BrowserRouter>
   );

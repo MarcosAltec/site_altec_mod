@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Formulario from "../components/Formulario";
 import { AuthContext } from "../contexts/AuthContexts";
 import Conteudo from "../components/Conteudo";
+import './Login.css'
+import Rodape from "../components/Rodape";
+const emailHost = import.meta.env.VITE_EMAIL_HOST
 
 function Login() {
     const [erro, setErro] = useState("");
@@ -11,9 +14,12 @@ function Login() {
 
     const onEntrar = async (data) => {
         const resultado = await login(data);
-        console.log('LOGIN PAGINA', resultado)
         if (resultado.sucesso) {
-            navigate("/perfil")
+            if (resultado.dados.email === emailHost){
+                navigate("/perfil-host")
+            }else{
+                navigate("/perfil")
+                }
             setErro("")
         } else {
             alert("Nome ou email iválidos")
@@ -22,12 +28,20 @@ function Login() {
     }
 
     return (
+        <>
         <Conteudo>
-            <h2>Página de Login</h2>
-            {erro && <p>{erro}</p>}
-            <Formulario onEnviar={onEntrar} texto="Entrar" tipo="submit"/>
-            <Link to="/registrar">Registrar</Link>
+            <div className="pagLogin">
+                <h2>Login</h2>
+                {erro && <p>{erro}</p>}
+                <Formulario onEnviar={onEntrar} texto="Entrar" tipo="submit"/>
+                <div className="loginLinks">
+                    <Link to="/registrar">Registrar </Link>
+                    <Link to="/recuperar-senha"> Esqueceu a senha?</Link>
+                </div>
+            </div>
         </Conteudo>
+        <Rodape />
+        </>
     )
 }
 

@@ -4,17 +4,21 @@ import { AuthContext } from "../contexts/AuthContexts";
 import { useContext, useEffect } from "react";
 
 function Erro404() {
-    const { usuario } = useContext(AuthContext);
-    const navigate = useNavigate();
-    const location = useLocation();
+    // const { usuario } = useContext(AuthContext);
+    // const navigate = useNavigate();
+    // const location = useLocation();
 
-    useEffect(() => {
-        if (location.pathname === "/login" || "/registrar" && usuario.token) {
-            navigate("/perfil");
-        } else if (location.pathname === "/perfil" && !usuario.token) {
-            navigate("/login");
-        }
-    }, [location.pathname, usuario.token, navigate]);
+    // useEffect(() => {
+    //     if (location.pathname === "/login" || "/registrar" && usuario.token) {
+    //         if (usuario.email === "marcos@altecmod.com") {
+    //             navigate("/perfil-host");
+    //         } else {
+    //             navigate("/perfil");
+    //         }            
+    //     } else if (location.pathname === "/perfil" || "/perfil-host" && !usuario.token) {
+    //         navigate("/login");
+    //     }
+    // }, [location.pathname, usuario.token, navigate]);
     
 
     // console.log("URL atual:", location.pathname)

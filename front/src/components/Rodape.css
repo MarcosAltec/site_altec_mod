@@ -1,0 +1,37 @@
+footer {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+    color: #1a4164;
+}
+.blocoSup {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px;
+}
+.blocoRodapeColuna {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.rodapeRedesSociais{
+    display: flex;
+    flex-direction: column;
+}
+.rodapeRedesSociais svg{
+    width: 30px;
+    margin: 0px 5px;
+}
+
+.blocoInf{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.logoRodape {
+    padding-top: 40px;
+}
+.linkRodape{
+    color: #1a4164;
+} 

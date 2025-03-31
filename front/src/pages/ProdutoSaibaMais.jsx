@@ -33,6 +33,9 @@ function ProdutoSaibaMais() {
         await adicionarCarrinho(codigo);
         navigate('/carrinho')
     }
+    const formataPreco = (preco) => {
+        return Number(preco).toFixed(2).replace('.', ','); // Converte para "22,90"
+    };
 
     return (
         <>
@@ -49,7 +52,7 @@ function ProdutoSaibaMais() {
                         {produto.map((item, index) => (
                             <div key={index}>
                                 <h2>{item.nome_mod}</h2>
-                                <h3>à vista R$ {item.preco}</h3>
+                                <h3>à vista R$ {formataPreco(item.preco)}</h3>
                                 <p>à vista no boleto ou cartão de crédito</p>
                                 <Botao texto="COLOCAR NO CARRINHO" clicar={carrinho} tipo="button"/>
                                 <br />

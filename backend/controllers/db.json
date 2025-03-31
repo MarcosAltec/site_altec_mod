@@ -1,0 +1,44 @@
+{
+    "_id": {
+        "$oid": "6799a4ab93007c1bdf5748ce"
+    },
+    "nome_mod": "Campione Invictus DD Scania",
+    "codigo": {
+        "$numberInt": "102"
+    },
+    "preco": {
+        "$numberDouble": "23.9"
+    },
+    "link_foto": "https://altecmod.com/img/invictusdd_sc/inicio.jpg",
+    "demais_fotos": [
+        "https://altecmod.com/img/invictusdd_sc/img1-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img2-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img3-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img4-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img5-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img6-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img7-icon.jpg",
+        "https://altecmod.com/img/invictusdd_sc/img8-icon.jpg"
+    ],
+    "sobre_o_mod": "Mod compatível apenas para o Euro Truck Simulator 2 - versão 1.45 em diante.",
+    "carroceria": "Comil Campione Invictus DD",
+    "chassis": [
+        "K 400 8x2 - Low Driver 14 Metros",
+        "K 400 6x2 - Low Driver 14 Metros"
+    ],
+    "motor": [
+        "DC13 112 440 Euro 5",
+        "DC13 113 400 Euro 5 (original)"
+    ],
+    "transmissao": [
+        "Opticruise GR 875 R",
+        "Opticruise GR 875 R (com retarder Scania)",
+        "Opticruise GRS 895 R",
+        "Opticruise GRS 895 R (com retarder Scania)"
+    ],
+    "interior": "Novo conceito de cabine apresentada pela comil em 2018",
+    "link_download": "https://www.mediafire.com/file/o9pjb6tn5vm4iqf/ALTEC_MOD_Campione_Invictus_DD_SCANIA.scs/file",
+    "__v": {
+        "$numberInt": "0"
+    }
+}

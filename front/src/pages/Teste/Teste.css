@@ -1,0 +1,45 @@
+/* Remove o estilo padrão */
+input[type="range"] {
+    -webkit-appearance: none; /* Remove o estilo padrão no Chrome/Safari */
+    appearance: none; /* Remove estilo padrão em navegadores modernos */
+    width: 100%; /* Largura total */
+    height: 8px; /* Altura da barra */
+    background: #ddd; /* Cor da barra */
+    border-radius: 5px; /* Bordas arredondadas */
+    outline: none; /* Remove a borda ao focar */
+    opacity: 0.9; /* Transparência suave */
+    transition: background 0.3s ease; /* Transição suave ao interagir */
+}
+
+/* Barra quando interagida (focada ou ativa) */
+input[type="range"]:hover {
+    background: #ccc; /* Cor mais escura ao passar o mouse */
+}
+
+/* Personaliza o polegar (thumb) do slider */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove o estilo padrão */
+    appearance: none; /* Remove o estilo padrão em navegadores modernos */
+    width: 20px; /* Largura do polegar */
+    height: 20px; /* Altura do polegar */
+    background: #007BFF; /* Cor do polegar */
+    border-radius: 50%; /* Polegar arredondado */
+    cursor: pointer; /* Troca para cursor de mão */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
+    transition: background 0.3s ease; /* Transição suave ao interagir */
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    background: #0056b3; /* Polegar mais escuro ao passar o mouse */
+}
+
+/* Para navegadores Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #007BFF;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

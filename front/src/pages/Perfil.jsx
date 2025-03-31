@@ -5,13 +5,12 @@ import { Link } from "react-router-dom";
 import Conteudo from "../components/Conteudo";
 
 function Perfil() {
-    const { meusPedidos } = useContext(AuthContext)
+    const { meusPedidos, usuario } = useContext(AuthContext)
     const [pedidos, setPedidos] = useState([])
     
     useEffect(() => {
         const fetchData = async () => {
             const lista = await meusPedidos();
-            // console.log("JJJJJ", lista)
             if (lista) {
                 const pedidos = lista.dados
                 setPedidos(pedidos)
@@ -19,10 +18,10 @@ function Perfil() {
         };
         fetchData();   
     }, [meusPedidos]);
-    // console.log("PERFIL PED", pedidos)
     return (
         <Conteudo>
-            <h2>Perfil do usuário</h2>
+            <h2>Sua conta</h2>
+            <h3>Olá, {usuario.nome}</h3>
             {pedidos ? (
                 <MeusProdutos itens={pedidos}/>
             ) : (

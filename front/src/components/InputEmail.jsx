@@ -1,3 +1,5 @@
+import './Inputs.css'
+
 function InputEmail(props) {
     const regras = {
         required: "Email é obrigatório",

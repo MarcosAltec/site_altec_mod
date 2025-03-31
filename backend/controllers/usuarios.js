@@ -30,7 +30,6 @@ async function validarDados (req, res, next) {
     }
 }
 async function criar(req, res) {
-    console.log("cadastro", req.body)
     const salto = crypto.randomBytes(16).toString('hex');
     const senhaCifrada = cifrarSenha(req.body.senha, salto);
     const buscarUsuario = await Usuario.findOne({ email: req.body.email })
@@ -69,10 +68,10 @@ async function entrar(req, res) {
 
 async function acessarViaToken(req, res) {
     const usuarioEncontrado = await Usuario.findOne({ email: req.headers.email });
-    console.log('ACESSO VIA TOKEN', req.headers.email, usuarioEncontrado)
 
     if (usuarioEncontrado) {
         res.status(201).json({
+            nome: usuarioEncontrado.nome,
             email: usuarioEncontrado.email,
             id: usuarioEncontrado._id
         })
@@ -95,15 +94,18 @@ function geradorDeCodigo() {
     for (let i = 1; i < 6; i++) {
         code += Math.floor(Math.random() * 10);
     }    
-    console.log("CODE", code);
     return code;
 }
 
 async function tempEmail(req, res) {
     const codigo = geradorDeCodigo();
-    
+    const buscarUsuario = await Usuario.findOne({ email: req.body.email })
+    if (buscarUsuario){
+        return res.status(401).json({ msg: 'Usuário já cadastrado' })
+    }
     try {
         const novoEmailTemp = await TempUser.create({ email: req.body.email, codigo: codigo });
+        console.log("TESTE EMAIL", novoEmailTemp.email)
         // await sendVerificationCode(novoEmailTemp.email, codigo)
         res.status(201).json(novoEmailTemp.email);
     } catch (err) {
@@ -119,11 +121,54 @@ async function validarEmail(req, res) {
         if(usuarioEncontrado.email == email && usuarioEncontrado.codigo == codigo){
             res.status(201).json(usuarioEncontrado.email);
         } else {
-            res.status(401).json({ msg: "Falha na validação."})
+            res.status(401).json({ msg: "Falha na validação, código inválido."})
         }
     } else {
         res.status(404).json({ msg: "Usuário não encontrado."})
     }
 }
 
-module.exports = { criar, deletar, validarDados, entrar, acessarViaToken, tempEmail, validarEmail };
+async function localizarCliente(req, res) {
+    
+    const cliente = await Usuario.findOne({ email: req.query.email });
+    if (cliente) {
+        res.status(200).json({ id: cliente._id, nome: cliente.nome, email: cliente.email });
+    } else {
+        res.status(404).json({ msg: "Usuário não encontrado." })
+    }
+};
+
+async function recuperarEmail(req, res) {
+    const codigo = geradorDeCodigo();
+    const cliente = await Usuario.findOne({ email: req.body.email});
+    
+    if (cliente) {
+        console.log("CLIENTE OK", cliente.email, codigo)
+        await TempUser.create({ email: cliente.email, codigo: codigo });
+        // await sendVerificationCode(cliente.email, codigo)
+        res.status(200).json(cliente.email)
+    } else {
+        res.status(404).json({ msg: "Email não cadastrado" });
+    }
+};
+
+async function novaSenha(req, res) {
+    console.log("REQ SENHA", req.body)
+    const usuario = await Usuario.findOne({ email: req.body.email })
+    console.log("REQ SENHA USUSARIO", usuario);
+    if (usuario) {
+        const salto = crypto.randomBytes(16).toString('hex');
+        const senhaCifrada = cifrarSenha(req.body.senha, salto);
+        usuario.senha = senhaCifrada;
+        usuario.salto = salto;
+        await usuario.save();
+
+        res.status(200).json({ msg: 'Senha atualizada com sucesso!' });
+    } else {
+        console.error('Erro ao redefinir senha:', error);
+        res.status(500).json({ msg: 'Erro no servidor ao redefinir senha' });
+    }
+    return "RES DO BACK"
+}
+
+module.exports = { criar, deletar, validarDados, entrar, acessarViaToken, tempEmail, validarEmail, localizarCliente, recuperarEmail, novaSenha };

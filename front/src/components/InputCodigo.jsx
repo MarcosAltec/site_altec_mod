@@ -1,11 +1,13 @@
+import './Inputs.css'
+
 function InputCodigo (props) {
 
     const regras = {
-        required: "Código necessário para validação",
-        minLenght: {
-            value: 6,
-            message: "O código deve 6 caracteres"
-        }
+        required: "Código necessário",
+        // minLenght: {
+        //     value: 6,
+        //     message: "O código deve 6 caracteres"
+        // }
         //     value: 6,
         //     message: "O código deve ter 6 dígitos"
         // },
@@ -17,6 +19,7 @@ function InputCodigo (props) {
     }
     return(
         <>
+            <label htmlFor="text">Código: </label>
             <input type="text" {...props.register("number", regras)}/>
             {props.error && <p>{props.error.message}</p>}
         </>
