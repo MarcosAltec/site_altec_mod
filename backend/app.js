@@ -14,18 +14,19 @@ var app = express();
 
 mongoose.connect(process.env.MONGODB_URL);
 
+const corsOptions = {
+    origin: 'https://teste.altecmod.com/', // Adicione a URL do seu frontend aqui
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+  
+app.use(cors(corsOptions));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-const corsOptions = {
-    origin: 'https://teste.altecmod.com', // Permite apenas esta origem
-    methods: ['GET', 'POST', 'PUT'], // Permite apenas GET e POST
-    allowedHeaders: ['Content-Type', 'Authorization'], // Define os cabeçalhos permitidos
-};
-
-app.use(cors(corsOptions));
 
 app.use('/api-docs', routerApidocs);
 app.use('/', usersRouter);
@@ -34,14 +35,11 @@ app.use('/pedidos', orderRouter);
 
 module.exports = app;
 
-// const PORT = process.env.PORT || 3001;
-// app.listen(PORT, () => {
-//     console.log(`Servidor rodando na porta ${PORT}`);
-// });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
 
-// const corsOptions = {
-//     origin: 'http://localhost:5173/',
-//     methods: 'GET,PUT,POST,DELETE',
-//     credentials: true,
-//     optionsSuccessStatus: 204
-// }
+app.get("/", (req, res) => {
+    res.send("Backend funcionando! 🚀");
+});
