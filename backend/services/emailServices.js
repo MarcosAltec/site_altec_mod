@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     secure: true, // true para usar SSL/TLS
     auth: {
         user: 'atualizacao@altecmod.com',
-        pass: 'Philco123@'
+        pass: '*******'
     }
 });
 
